@@ -1,5 +1,8 @@
+MDDIR    := .
+MD       := $(wildcard *.md **/*.md)
+
 PAGEDIR  := gh-pages
-PAGE     := $(patsubst %.md, $(PAGEDIR)/%.md, $(patsubst %readme.md, %index.md, $(wildcard *.md) $(shell find example man -name '*.md')))
+PAGE     := $(patsubst %.md, $(PAGEDIR)/%.md, $(patsubst %readme.md, %index.md, $(MD)))
 
 test: test-lib test-bin
 
