@@ -14,19 +14,19 @@ var browsers = [
 ];
 
 browsers.forEach(function (browser) {
-  test('print watch events with file url in ' + browser, function (assert) {
-    assert.plan(5);
+  var args = [
+    bin,
+    '--cwd',
+    'test/fixture/watch-events',
+    '--watch',
+    '*.txt',
+    '--browser',
+    browser,
+    url.resolve('file://', path.join('/' + __dirname, '/fixture/watch-events/index.html'))
+  ];
 
-    var args = [
-      bin,
-      '--cwd',
-      'test/fixture/watch-events',
-      '--watch',
-      '*.txt',
-      '--browser',
-      browser,
-      url.resolve('file://', path.join('/' + __dirname, '/fixture/watch-events/index.html'))
-    ];
+  test(args.join(' '), function (assert) {
+    assert.plan(5);
 
     var ps = child.spawn('node', args);
     ps.stderr.pipe(process.stderr);
@@ -65,17 +65,17 @@ browsers.forEach(function (browser) {
 });
 
 browsers.forEach(function (browser) {
-  test('print watch events with server in ' + browser, function (assert) {
-    assert.plan(5);
+  var args = [
+    bin,
+    '--watch',
+    '**/*.txt',
+    '--browser',
+    browser,
+    'test/fixture/watch-events/index.js',
+  ];
 
-    var args = [
-      bin,
-      '--watch',
-      '**/*.txt',
-      '--browser',
-      browser,
-      'test/fixture/watch-events/index.js',
-    ];
+  test(args.join(' '), function (assert) {
+    assert.plan(5);
 
     var ps = child.spawn('node', args);
     ps.stderr.pipe(process.stderr);
