@@ -12,11 +12,11 @@ var browsers = [
 browsers.forEach(function (browser, index) {
   var port = 4000 + index;
 
-  test('watch events in ' + browser, function (test) {
-    test.plan(6);
+  test('watch events in ' + browser, function (assert) {
+    assert.plan(6);
 
     var runner = amok.createRunner();
-    test.on('end', function () {
+    assert.on('end', function () {
       runner.close();
     });
 
@@ -27,7 +27,7 @@ browsers.forEach(function (browser, index) {
     runner.use(amok.watch('*.txt'));
 
     runner.connect(port, 'localhost', function () {
-      test.pass('connect');
+      assert.pass('connect');
 
       var values = [
         'ready',
@@ -37,7 +37,7 @@ browsers.forEach(function (browser, index) {
       ];
 
       runner.client.console.on('data', function (message) {
-        test.equal(message.text, values.shift(), message.text);
+        assert.equal(message.text, values.shift(), message.text);
 
         if (values[0] === undefined) {
           runner.close();
@@ -51,7 +51,7 @@ browsers.forEach(function (browser, index) {
       });
 
       runner.client.console.enable(function (error) {
-        test.error(error);
+        assert.error(error);
       });
     });
   });

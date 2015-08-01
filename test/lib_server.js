@@ -5,11 +5,11 @@ var http = require('http');
 var fs = require('fs');
 var path = require('path');
 
-test('serve index.html', function (test) {
-  test.plan(8);
+test('serve index.html', function (assert) {
+  assert.plan(8);
 
   var runner = amok.createRunner();
-  test.on('end', function () {
+  assert.on('end', function () {
     runner.close();
   });
 
@@ -19,11 +19,11 @@ test('serve index.html', function (test) {
   runner.use(amok.server(9966, 'localhost'));
 
   runner.run(function (error, client, runner) {
-    test.error(error);
-    test.ok(client, 'client');
-    test.ok(runner, 'runner');
+    assert.error(error);
+    assert.ok(client, 'client');
+    assert.ok(runner, 'runner');
 
-    test.equal(runner.get('url'), url.format({
+    assert.equal(runner.get('url'), url.format({
       protocol: 'http',
       port: 9966,
       hostname: 'localhost',
@@ -36,7 +36,7 @@ test('serve index.html', function (test) {
         hostname: 'localhost',
         path: pathname
       }, function (response) {
-        test.equal(response.statusCode, 200);
+        assert.equal(response.statusCode, 200);
 
         response.setEncoding('utf-8');
 
@@ -46,7 +46,7 @@ test('serve index.html', function (test) {
         });
 
         response.on('end', function () {
-          test.equal(body, fs.readFileSync('test/fixture/basic/index.html', 'utf-8'));
+          assert.equal(body, fs.readFileSync('test/fixture/basic/index.html', 'utf-8'));
           pathnames.splice(pathnames.indexOf(pathname), 1);
         });
       });
@@ -54,11 +54,11 @@ test('serve index.html', function (test) {
   });
 });
 
-test('generate index.html', function (test) {
-  test.plan(12);
+test('generate index.html', function (assert) {
+  assert.plan(12);
 
   var runner = amok.createRunner();
-  test.on('end', function () {
+  assert.on('end', function () {
     runner.close();
   });
 
@@ -73,11 +73,11 @@ test('generate index.html', function (test) {
   runner.use(amok.server(9966, 'localhost'));
 
   runner.run(function (error, client, runner) {
-    test.error(error);
-    test.ok(client, 'client');
-    test.ok(runner, 'runner');
+    assert.error(error);
+    assert.ok(client, 'client');
+    assert.ok(runner, 'runner');
 
-    test.equal(runner.get('url'), url.format({
+    assert.equal(runner.get('url'), url.format({
       protocol: 'http',
       port: 9966,
       hostname: 'localhost',
@@ -90,7 +90,7 @@ test('generate index.html', function (test) {
         hostname: 'localhost',
         path: pathname
       }, function (response) {
-        test.equal(response.statusCode, 200);
+        assert.equal(response.statusCode, 200);
 
         response.setEncoding('utf-8');
 
@@ -100,9 +100,9 @@ test('generate index.html', function (test) {
         });
 
         response.on('end', function () {
-          test.ok(body.indexOf('<script src="a"></script>'));
-          test.ok(body.indexOf('<script src="b"></script>'));
-          test.ok(body.indexOf('<script src="c"></script>'));
+          assert.ok(body.indexOf('<script src="a"></script>'));
+          assert.ok(body.indexOf('<script src="b"></script>'));
+          assert.ok(body.indexOf('<script src="c"></script>'));
 
           pathnames.splice(pathnames.indexOf(pathname), 1);
         });
@@ -111,11 +111,11 @@ test('generate index.html', function (test) {
   });
 });
 
-test('generate favicon.ico', function (test) {
-  test.plan(5);
+test('generate favicon.ico', function (assert) {
+  assert.plan(5);
 
   var runner = amok.createRunner();
-  test.on('end', function () {
+  assert.on('end', function () {
     runner.close();
   });
 
@@ -128,11 +128,11 @@ test('generate favicon.ico', function (test) {
   runner.use(amok.server(9966, 'localhost'));
 
   runner.run(function (error, client, runner) {
-    test.error(error);
-    test.ok(client, 'client');
-    test.ok(runner, 'runner');
+    assert.error(error);
+    assert.ok(client, 'client');
+    assert.ok(runner, 'runner');
 
-    test.equal(runner.get('url'), url.format({
+    assert.equal(runner.get('url'), url.format({
       protocol: 'http',
       port: 9966,
       hostname: 'localhost',
@@ -144,7 +144,7 @@ test('generate favicon.ico', function (test) {
       hostname: 'localhost',
       path: '/favicon.ico'
     }, function (response) {
-      test.equal(response.statusCode, 200);
+      assert.equal(response.statusCode, 200);
 
       var body = '';
       response.on('data', function (chunk) {
@@ -158,11 +158,11 @@ test('generate favicon.ico', function (test) {
   });
 });
 
-test('generate index.html', function (test) {
-  test.plan(12);
+test('generate index.html', function (assert) {
+  assert.plan(12);
 
   var runner = amok.createRunner();
-  test.on('end', function () {
+  assert.on('end', function () {
     runner.close();
   });
 
@@ -177,11 +177,11 @@ test('generate index.html', function (test) {
   runner.use(amok.server(9966, 'localhost'));
 
   runner.run(function (error, client, runner) {
-    test.error(error);
-    test.ok(client, 'client');
-    test.ok(runner, 'runner');
+    assert.error(error);
+    assert.ok(client, 'client');
+    assert.ok(runner, 'runner');
 
-    test.equal(runner.get('url'), url.format({
+    assert.equal(runner.get('url'), url.format({
       protocol: 'http',
       port: 9966,
       hostname: 'localhost',
@@ -194,7 +194,7 @@ test('generate index.html', function (test) {
         hostname: 'localhost',
         path: pathname
       }, function (response) {
-        test.equal(response.statusCode, 200);
+        assert.equal(response.statusCode, 200);
 
         response.setEncoding('utf-8');
 
@@ -204,9 +204,9 @@ test('generate index.html', function (test) {
         });
 
         response.on('end', function () {
-          test.ok(body.indexOf('<script src="a"></script>'));
-          test.ok(body.indexOf('<script src="b"></script>'));
-          test.ok(body.indexOf('<script src="c"></script>'));
+          assert.ok(body.indexOf('<script src="a"></script>'));
+          assert.ok(body.indexOf('<script src="b"></script>'));
+          assert.ok(body.indexOf('<script src="c"></script>'));
 
           pathnames.splice(pathnames.indexOf(pathname), 1);
         });

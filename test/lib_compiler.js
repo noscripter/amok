@@ -12,11 +12,11 @@ var commands = [
 ];
 
 commands.forEach(function (command, index) {
-  test('compile with ' + command, function (test) {
-    test.plan(5);
+  test('compile with ' + command, function (assert) {
+    assert.plan(5);
 
     var runner = amok.createRunner();
-    test.on('end', function () {
+    assert.on('end', function () {
       runner.close();
     });
 
@@ -29,16 +29,16 @@ commands.forEach(function (command, index) {
 
     runner.use(amok.compiler(command, entries));
     runner.run(function (error, client, runner) {
-      test.error(error);
-      test.ok(client, 'client');
-      test.ok(runner, 'runner');
+      assert.error(error);
+      assert.ok(client, 'client');
+      assert.ok(runner, 'runner');
 
       var scripts = runner.get('scripts');
       var pathnames = Object.keys(scripts);
       var filename = scripts[pathnames[0]];
 
-      test.equal(pathnames.length, 1);
-      test.equal(fs.readFileSync(filename, 'utf-8'), fs.readFileSync(path.join(dirname, 'out.js'), 'utf-8'));
+      assert.equal(pathnames.length, 1);
+      assert.equal(fs.readFileSync(filename, 'utf-8'), fs.readFileSync(path.join(dirname, 'out.js'), 'utf-8'));
     });
   });
 });

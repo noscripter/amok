@@ -36,17 +36,17 @@ var help = [
 help.forEach(function (arg) {
   var args = [bin, arg];
 
-  test('bin print help', function (test) {
-    test.plan(2);
+  test('bin print help', function (assert) {
+    assert.plan(2);
 
     var ps = child.spawn('node', args);
     ps.stdout.on('data', function (data) {
       var message = data.toString();
-      test.ok(message.indexOf('Usage:') > -1);
+      assert.ok(message.indexOf('Usage:') > -1);
     });
 
     ps.on('close', function (code) {
-      test.equal(code, 0);
+      assert.equal(code, 0);
     });
   });
 });

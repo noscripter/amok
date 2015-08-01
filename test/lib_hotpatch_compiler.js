@@ -19,8 +19,8 @@ browsers.forEach(function (browser, index) {
   ];
 
   compilers.forEach(function (compiler) {
-    test('hot patch basic script compiled with ' + compiler + ' in ' + browser, function (test) {
-      test.plan(34);
+    test('hot patch basic script compiled with ' + compiler + ' in ' + browser, function (assert) {
+      assert.plan(34);
 
       var dirname = 'test/fixture/hotpatch-' + compiler;
       var entries = fs.readdirSync(dirname).map(function (filename) {
@@ -30,7 +30,7 @@ browsers.forEach(function (browser, index) {
       });
 
       var runner = amok.createRunner();
-      test.on('end', function () {
+      assert.on('end', function () {
         runner.close();
       });
 
@@ -43,7 +43,7 @@ browsers.forEach(function (browser, index) {
       runner.use(amok.hotpatch());
 
       runner.connect(port, 'localhost', function () {
-        test.pass('connect');
+        assert.pass('connect');
 
         var values = [
           'ready',
@@ -63,25 +63,25 @@ browsers.forEach(function (browser, index) {
         var source = fs.readFileSync(entries[0], 'utf-8');
 
         runner.client.console.on('data', function (message) {
-          test.equal(message.text, values.shift(), message.text);
+          assert.equal(message.text, values.shift(), message.text);
           if (values.length === 0) {
             return;
           }
 
           if (message.text.match(/step/)) {
             source = source.replace(message.text, values[0]);
-            test.notEqual(source, fs.readFileSync(entries[0]));
+            assert.notEqual(source, fs.readFileSync(entries[0]));
 
             setTimeout(function () {
               fs.writeFile(entries[0], source, 'utf-8', function (error) {
-                test.error(error);
+                assert.error(error);
               });
             }, 1000);
           }
         });
 
         runner.client.console.enable(function (error) {
-          test.error(error);
+          assert.error(error);
         });
       });
     });

@@ -14,8 +14,8 @@ var browsers = [
 ];
 
 browsers.forEach(function (browser) {
-  test('print watch events with file url in ' + browser, function (test) {
-    test.plan(5);
+  test('print watch events with file url in ' + browser, function (assert) {
+    assert.plan(5);
 
     var args = [
       bin,
@@ -31,7 +31,7 @@ browsers.forEach(function (browser) {
     var ps = child.spawn('node', args);
     ps.stderr.pipe(process.stderr);
     ps.on('close', function () {
-      test.pass('close');
+      assert.pass('close');
     });
 
     var messages = [
@@ -47,7 +47,7 @@ browsers.forEach(function (browser) {
         return;
       }
 
-      test.equal(line, messages.shift(), line);
+      assert.equal(line, messages.shift(), line);
 
       if (line === 'ready') {
         fs.writeFileSync('test/fixture/watch-events/file.txt', 'hello', 'utf-8');
@@ -65,8 +65,8 @@ browsers.forEach(function (browser) {
 });
 
 browsers.forEach(function (browser) {
-  test('print watch events with server in ' + browser, function (test) {
-    test.plan(5);
+  test('print watch events with server in ' + browser, function (assert) {
+    assert.plan(5);
 
     var args = [
       bin,
@@ -80,7 +80,7 @@ browsers.forEach(function (browser) {
     var ps = child.spawn('node', args);
     ps.stderr.pipe(process.stderr);
     ps.on('close', function () {
-      test.pass('close');
+      assert.pass('close');
     });
 
     var messages = [
@@ -96,7 +96,7 @@ browsers.forEach(function (browser) {
         return;
       }
 
-      test.equal(line, messages.shift(), line);
+      assert.equal(line, messages.shift(), line);
 
       if (line === 'ready') {
         fs.writeFileSync('test/fixture/watch-events/file.txt', 'hello', 'utf-8');

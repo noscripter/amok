@@ -13,11 +13,11 @@ var browsers = [
 browsers.forEach(function (browser, index) {
   var port = 4000 + index;
 
-  test('hot patch basic script in ' + browser, function (test) {
-    test.plan(34);
+  test('hot patch basic script in ' + browser, function (assert) {
+    assert.plan(34);
 
     var runner = amok.createRunner();
-    test.on('end', function () {
+    assert.on('end', function () {
       runner.close();
     });
 
@@ -27,7 +27,7 @@ browsers.forEach(function (browser, index) {
     runner.use(amok.hotpatch('test/fixture/hotpatch-basic/*.js'));
 
     runner.connect(port, 'localhost', function () {
-      test.pass('connect');
+      assert.pass('connect');
 
       var values = [
         'ready',
@@ -47,23 +47,23 @@ browsers.forEach(function (browser, index) {
       var source = fs.readFileSync('test/fixture/hotpatch-basic/index.js', 'utf-8');
 
       runner.client.console.on('data', function (message) {
-        test.equal(message.text, values.shift(), message.text);
+        assert.equal(message.text, values.shift(), message.text);
         if (values.length === 0) {
           return;
         }
        
         if (message.text.match(/step/)) {
           source = source.replace(message.text, values[0]);
-          test.notEqual(source, fs.readFileSync('test/fixture/hotpatch-basic/index.js'));
+          assert.notEqual(source, fs.readFileSync('test/fixture/hotpatch-basic/index.js'));
 
           fs.writeFile('test/fixture/hotpatch-basic/index.js', source, 'utf-8', function (error) {
-            test.error(error);
+            assert.error(error);
           });
         }
       });
 
       runner.client.console.enable(function (error) {
-        test.error(error);
+        assert.error(error);
       });
     });
   });
@@ -72,12 +72,12 @@ browsers.forEach(function (browser, index) {
 browsers.forEach(function (browser, index) {
   var port = 4000 + index;
 
-  test('hot patch events in ' + browser, function (test) {
-    test.plan(6);
+  test('hot patch events in ' + browser, function (assert) {
+    assert.plan(6);
 
     var runner = amok.createRunner();
     runner.on('close', function () {
-      test.pass('close');
+      assert.pass('close');
     });
 
     runner.set('cwd', 'test/fixture/hotpatch-events');
@@ -87,7 +87,7 @@ browsers.forEach(function (browser, index) {
     runner.use(amok.hotpatch('test/fixture/hotpatch-events/*.js'));
 
     runner.connect(port, 'localhost', function () {
-      test.pass('connect');
+      assert.pass('connect');
 
       var values = [
         'ready',
@@ -96,7 +96,7 @@ browsers.forEach(function (browser, index) {
 
       runner.client.console.on('data', function (message) {
 
-        test.equal(message.text, values.shift());
+        assert.equal(message.text, values.shift());
 
         if (values[0] === undefined) {
           runner.close();
@@ -104,14 +104,14 @@ browsers.forEach(function (browser, index) {
           var source = fs.readFileSync('test/fixture/hotpatch-events/index.js', 'utf-8');
           setTimeout(function () {
             fs.writeFile('test/fixture/hotpatch-events/index.js', source, 'utf-8', function (error) {
-              test.error(error);
+              assert.error(error);
             });
           }, 1000);
         }
       });
 
       runner.client.console.enable(function (error) {
-        test.error(error);
+        assert.error(error);
       });
     });
   });

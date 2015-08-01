@@ -23,8 +23,8 @@ var compilers = [
 
 browsers.forEach(function (browser) {
   compilers.forEach(function (compiler, index) {
-    test('bin hot patch basic compiled with ' + compiler + ' in ' + browser, function (test) {
-      test.plan(13);
+    test('bin hot patch basic compiled with ' + compiler + ' in ' + browser, function (assert) {
+      assert.plan(13);
 
       var dirname = 'test/fixture/hotpatch-' + compiler;
       var entries = fs.readdirSync(dirname).map(function (filename) {
@@ -49,7 +49,7 @@ browsers.forEach(function (browser) {
       ps.stderr.pipe(process.stderr);
 
       ps.on('close', function () {
-        test.pass('close');
+        assert.pass('close');
       });
 
       var values = [
@@ -74,7 +74,7 @@ browsers.forEach(function (browser) {
           return;
         }
 
-        test.equal(line, values.shift(), line);
+        assert.equal(line, values.shift(), line);
 
         if (values[0] === undefined) {
           ps.kill('SIGTERM')

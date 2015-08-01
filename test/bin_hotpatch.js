@@ -28,14 +28,14 @@ browsers.forEach(function (browser) {
       entry
     ];
 
-    test(args.join(' '), function (test) {
-      test.plan(23);
+    test(args.join(' '), function (assert) {
+      assert.plan(23);
 
       var ps = child.spawn('node', args);
       ps.stderr.pipe(process.stderr);
 
       ps.on('close', function () {
-        test.pass('close');
+        assert.pass('close');
       });
 
       var values = [
@@ -60,7 +60,7 @@ browsers.forEach(function (browser) {
           return;
         }
 
-        test.equal(line, values.shift(), line);
+        assert.equal(line, values.shift(), line);
 
         if (values[0] === undefined) {
           ps.kill('SIGTERM')
@@ -68,7 +68,7 @@ browsers.forEach(function (browser) {
           source = source.replace(line, values[0]);
 
           fs.writeFile('test/fixture/hotpatch-basic/index.js', source, 'utf-8', function (error) {
-            test.error(error);
+            assert.error(error);
           });
         }
       });
