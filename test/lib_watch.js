@@ -13,7 +13,32 @@ browsers.forEach(function (browser, index) {
   var port = 4000 + index;
 
   test('watch events in ' + browser, function (assert) {
-    assert.plan(6);
+    var steps = {
+      'ready': function (assert) {
+        fs.writeFile('test/fixture/watch-events/file.txt', 'hello', 'utf-8', function (error) {
+          assert.error(error);
+        });
+      },
+
+      'add file.txt': function (assert) {
+        fs.writeFile('test/fixture/watch-events/file.txt', 'hello world', 'utf-8', function (error) {
+          assert.error(error);
+        });
+      },
+
+      'change file.txt': function (assert) {
+        fs.unlink('test/fixture/watch-events/file.txt', function (error) {
+          assert.error(error);
+        });
+      },
+
+      'unlink file.txt': function (assert) {
+        assert.pass();
+      },
+    };
+
+    var keys = Object.keys(steps);
+    assert.plan(keys.length);
 
     var runner = amok.createRunner();
     assert.on('end', function () {
@@ -27,27 +52,16 @@ browsers.forEach(function (browser, index) {
     runner.use(amok.watch('*.txt'));
 
     runner.connect(port, 'localhost', function () {
-      assert.pass('connect');
-
-      var values = [
-        'ready',
-        'add file.txt',
-        'change file.txt',
-        'unlink file.txt'
-      ];
-
       runner.client.console.on('data', function (message) {
-        assert.equal(message.text, values.shift(), message.text);
-
-        if (values[0] === undefined) {
-          runner.close();
-        } if (message.text === 'ready') {
-          fs.writeFileSync('test/fixture/watch-events/file.txt', 'hello', 'utf-8');
-        } else if (message.text === 'add file.txt') {
-          fs.writeFileSync('test/fixture/watch-events/file.txt', 'hello world', 'utf-8');
-        } else if (message.text === 'change file.txt') {
-          fs.unlinkSync('test/fixture/watch-events/file.txt');
+        if (!keys.length || !message.text.length) {
+          return;
         }
+
+        assert.equal(message.text, keys.shift(), message.text);
+
+        var key = keys.shift();
+        steps[key](assert);
+        assert.equal(message.text, key, message.text);
       });
 
       runner.client.console.enable(function (error) {

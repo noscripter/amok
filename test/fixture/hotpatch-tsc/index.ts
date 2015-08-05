@@ -1,5 +1,3 @@
-console.log('ready');
-
 let previous = null;
 
 setInterval(() => {

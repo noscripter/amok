@@ -11,7 +11,7 @@ var browsers = [
 browsers.forEach(function (browser, index) {
   var port = 4000 + index;
   var compilers = [
-    // 'babel',
+  // 'babel',
     'coffee',
     'tsc',
     'watchify',
@@ -20,7 +20,12 @@ browsers.forEach(function (browser, index) {
 
   compilers.forEach(function (compiler) {
     test('hot patch basic script compiled with ' + compiler + ' in ' + browser, function (assert) {
-      assert.plan(34);
+      var steps = Array.apply(0, Array(10)).map(function (value, index) {
+        return 'step-' + index;
+      });
+      steps.push('step-0');
+
+      assert.plan(steps.length * 2 + 1);
 
       var dirname = 'test/fixture/hotpatch-' + compiler;
       var entries = fs.readdirSync(dirname).map(function (filename) {
@@ -43,41 +48,21 @@ browsers.forEach(function (browser, index) {
       runner.use(amok.hotpatch());
 
       runner.connect(port, 'localhost', function () {
-        assert.pass('connect');
-
-        var values = [
-          'ready',
-          'step-0',
-          'step-1',
-          'step-2',
-          'step-3',
-          'step-4',
-          'step-5',
-          'step-6',
-          'step-7',
-          'step-8',
-          'step-9',
-          'step-0',
-        ];
-
         var source = fs.readFileSync(entries[0], 'utf-8');
 
         runner.client.console.on('data', function (message) {
-          assert.equal(message.text, values.shift(), message.text);
-          if (values.length === 0) {
+          if (!steps.length || !message.text.match(/^step/)) {
             return;
           }
 
-          if (message.text.match(/step/)) {
-            source = source.replace(message.text, values[0]);
-            assert.notEqual(source, fs.readFileSync(entries[0]));
+          assert.equal(message.text, steps.shift(), message.text);
 
-            setTimeout(function () {
-              fs.writeFile(entries[0], source, 'utf-8', function (error) {
-                assert.error(error);
-              });
-            }, 1000);
-          }
+          setTimeout(function () {
+            source = source.replace(message.text, steps[0] || 'step-0');
+            fs.writeFile(entries[0], source, 'utf-8', function (error) {
+              assert.error(error);
+            });
+          }, 1000);
         });
 
         runner.client.console.enable(function (error) {

@@ -26,89 +26,49 @@ browsers.forEach(function (browser) {
   ];
 
   test(args.join(' '), function (assert) {
-    assert.plan(5);
+    var steps = {
+      'ready': function(assert) {
+        fs.writeFile('test/fixture/watch-events/file.txt', 'hello', 'utf-8', function(error) {
+          assert.error(error);
+        });
+      },
+      
+      'add file.txt': function(assert) {
+        fs.writeFile('test/fixture/watch-events/file.txt', 'hello world', 'utf-8', function(error) {
+          assert.error(error);
+        });
+      },
+      
+      'change file.txt': function(assert) {
+        fs.unlink('test/fixture/watch-events/file.txt', function(error) {
+          assert.error(error);
+        });
+      },
+
+      'unlink file.txt': function(assert) {
+        assert.pass();
+      },
+    };
+    
+    var keys = Object.keys(steps);
+    assert.plan(keys.length * 2);
 
     var ps = child.spawn('node', args);
     ps.stderr.pipe(process.stderr);
-    ps.on('close', function () {
-      assert.pass('close');
+    assert.on('end', function () {
+      ps.kill();
     });
-
-    var messages = [
-      'ready',
-      'add file.txt',
-      'change file.txt',
-      'unlink file.txt'
-    ];
 
     ps.stdout.setEncoding('utf-8');
     ps.stdout.pipe(sculpt.split(/\r?\n/)).on('data', function (line) {
-      if (line.length === 0) {
+      if (!keys.length || !line.length) {
         return;
       }
 
-      assert.equal(line, messages.shift(), line);
-
-      if (line === 'ready') {
-        fs.writeFileSync('test/fixture/watch-events/file.txt', 'hello', 'utf-8');
-      } else if (line === 'add file.txt') {
-        fs.writeFileSync('test/fixture/watch-events/file.txt', 'hello world', 'utf-8');
-      } else if (line === 'change file.txt') {
-        fs.unlinkSync('test/fixture/watch-events/file.txt');
-      }
-
-      if (messages.length === 0) {
-        ps.kill();
-      }
+      var key = keys.shift();
+      steps[key](assert);
+      assert.equal(line, key, line);
     });
   });
 });
 
-browsers.forEach(function (browser) {
-  var args = [
-    bin,
-    '--watch',
-    '**/*.txt',
-    '--browser',
-    browser,
-    'test/fixture/watch-events/index.js',
-  ];
-
-  test(args.join(' '), function (assert) {
-    assert.plan(5);
-
-    var ps = child.spawn('node', args);
-    ps.stderr.pipe(process.stderr);
-    ps.on('close', function () {
-      assert.pass('close');
-    });
-
-    var messages = [
-      'ready',
-      'add test/fixture/watch-events/file.txt',
-      'change test/fixture/watch-events/file.txt',
-      'unlink test/fixture/watch-events/file.txt'
-    ];
-
-    ps.stdout.setEncoding('utf-8');
-    ps.stdout.pipe(sculpt.split(/\r?\n/)).on('data', function (line) {
-      if (line.length === 0) {
-        return;
-      }
-
-      assert.equal(line, messages.shift(), line);
-
-      if (line === 'ready') {
-        fs.writeFileSync('test/fixture/watch-events/file.txt', 'hello', 'utf-8');
-      } else if (line === 'add test/fixture/watch-events/file.txt') {
-        fs.writeFileSync('test/fixture/watch-events/file.txt', 'hello world', 'utf-8');
-      } else if (line === 'change test/fixture/watch-events/file.txt') {
-        fs.unlinkSync('test/fixture/watch-events/file.txt');
-      }
-
-      if (messages.length === 0) {
-        ps.kill();
-      }
-    });
-  });
-});

@@ -1,5 +1,3 @@
-console.log('ready');
-
 var previous = null;
 
 setInterval(function() {

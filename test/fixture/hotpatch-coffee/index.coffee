@@ -1,5 +1,3 @@
-console.log 'ready'
-
 previous = null
 
 setInterval (->
