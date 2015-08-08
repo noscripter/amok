@@ -4,17 +4,10 @@ MD       := $(wildcard *.md **/*.md)
 PAGEDIR  := .page
 PAGE     := $(patsubst %.md, $(PAGEDIR)/%.md, $(patsubst %readme.md, %index.md, $(MD)))
 
-test:
-	git reset HEAD -- test/fixture
-	tape test/bin*.js
+TEST     := $(wildcard test/*.js)
 
-test-bin:
-	git reset HEAD -- test/fixture
-	tape test/bin*.js
-
-test-lib:
-	git reset HEAD -- test/fixture
-	tape test/lib*.js
+test: $(TEST)
+	tape $^
 
 $(PAGEDIR)/index.md: readme.md
 	echo '---\n---\n' > $@
