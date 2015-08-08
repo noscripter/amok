@@ -7,6 +7,9 @@ program.version(require('../package.json').version);
 
 program.usage('[OPTION ...] <URL | FILE>');
 
+program.option('--host <HOST>', 'specify host', 'localhost');
+program.option('--port <PORT>', 'specify port', '4000');
+
 program.option('--debug-host <HOST>', 'specify debug host', 'localhost');
 program.option('--debug-port <PORT>', 'specify debug port', 9222);
 
@@ -93,7 +96,9 @@ amok.on('connect', function () {
   });
 });
 
-amok.connect(program.debugPort, program.debugHost);
+amok.use(amok.multiplexer(program.port, program.host, program.debugPort, program.debugHost));
+
+amok.connect(program.port, program.host);
 
 process.on('SIGTERM', function () {
   process.exit(0);
