@@ -39,7 +39,6 @@ help.forEach(function (arg) {
   test('bin print help', function (test) {
     test.plan(2);
 
-    test.comment(args.join(' '));
     var ps = child.spawn('node', args);
     ps.stdout.on('data', function (data) {
       var message = data.toString();

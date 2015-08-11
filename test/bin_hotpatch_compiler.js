@@ -43,8 +43,6 @@ browsers.forEach(function (browser) {
         entries[0]
       ];
 
-      test.comment(args.join(' '));
-
       var ps = child.spawn('node', args);
       ps.stderr.pipe(process.stderr);
 

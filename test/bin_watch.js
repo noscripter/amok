@@ -28,8 +28,6 @@ browsers.forEach(function (browser) {
       url.resolve('file://', path.join('/' + __dirname, '/fixture/watch-events/index.html'))
     ];
 
-    test.comment(args.join(' '));
-
     var ps = child.spawn('node', args);
     ps.stderr.pipe(process.stderr);
     ps.on('close', function () {
@@ -78,8 +76,6 @@ browsers.forEach(function (browser) {
       browser,
       'test/fixture/watch-events/index.js',
     ];
-
-    test.comment(args.join(' '));
 
     var ps = child.spawn('node', args);
     ps.stderr.pipe(process.stderr);

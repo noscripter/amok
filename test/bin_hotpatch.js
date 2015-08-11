@@ -60,7 +60,6 @@ browsers.forEach(function (browser) {
           return;
         }
 
-        test.comment(line);
         test.equal(line, values.shift(), line);
 
         if (values[0] === undefined) {
