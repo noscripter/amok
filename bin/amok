@@ -8,10 +8,10 @@ program.version(require('../package.json').version);
 program.usage('[OPTION ...] <URL | FILE>');
 
 program.option('--host <HOST>', 'specify host', 'localhost');
-program.option('--port <PORT>', 'specify port', '4000');
+program.option('--port <PORT>', 'specify port', 9222);
 
 program.option('--debug-host <HOST>', 'specify debug host', 'localhost');
-program.option('--debug-port <PORT>', 'specify debug port', 9222);
+program.option('--debug-port <PORT>', 'specify debug port', 9223);
 
 program.option('-b, --browser <BROWSER>', 'specify browser', function (value) {
   var args = process.env[value.toUpperCase() + '_FLAGS'];

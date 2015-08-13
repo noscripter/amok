@@ -37,7 +37,7 @@ file system monitoring and an interactive read-eval-print-loop.
 
 `--debug-port` _PORT_
 :   The port number where the remote debugging connection will be established,
-by default this will be on port `9222`.
+by default this will be on port `9223`.
 
 `--debug-host` _PORT_
 :   The host name where the remote debugging connection will be established,
