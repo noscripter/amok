@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.1.2 - 2014-08-13
+### FIXED
+
+- Fixed an issue with the multiplexer where targets would be given
+the upstream `webSocketDebuggerUrl`
+
+### CHANGED
+
+- Changed the default `port` option value to be 9222 and the default
+`debug-port` option value to be 9223.
+
 ## 1.1.1 - 2014-08-12
 ### FIXED
 
