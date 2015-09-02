@@ -1,4 +1,4 @@
-![amok](https://cloud.githubusercontent.com/assets/157787/8890583/aef95820-3338-11e5-92fe-311bdf0106c1.png)
+![amok](https://cloud.githubusercontent.com/assets/157787/9637439/58c03000-51d3-11e5-8502-0b7d57096d57.png)
 
 Amok is a free open source, editor agnostic, cross-platform command line
 tool for a hassle-free live development, testing and debugging workflow for web browsers.
