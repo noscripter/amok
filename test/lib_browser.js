@@ -1,4 +1,5 @@
 var amok = require('..');
+var net = require('net');
 var test = require('tape');
 var url = require('url');
 var path = require('path');
@@ -35,5 +36,38 @@ commands.forEach(function (command, index) {
         test.error(error);
       });
     });
+  });
+});
+
+commands.forEach(function (command, index) {
+  var port = 4000 + index;
+
+  test('error when port is used in ' + command, function (test) {
+    test.plan(2);
+    test.timeoutAfter(5000);
+
+    var server = net.createServer();
+    server.on('close', function() {
+      test.pass();
+    });
+
+    server.on('listening', function() {
+      var runner = amok.createRunner();
+      server.on('close', function () {
+        runner.close();
+      });
+
+      runner.set('url', url.resolve('file://', path.join('/' + __dirname, '/fixture/basic/index.html')));
+      runner.use(amok.browser(port, command));
+
+      runner.on('error', function(error) {
+        test.equal(error.code, 'EADDRINUSE');
+        server.close();
+      });
+
+      runner.connect(port, 'localhost');
+    });
+
+    server.listen(port);
   });
 });
