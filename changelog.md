@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## 1.1.2 - 2014-08-13
+## 1.1.2 - 2015-08-13
 ### FIXED
 
 - Fixed an issue with the multiplexer where targets would be given
@@ -14,7 +14,7 @@ the upstream `webSocketDebuggerUrl`
 - Changed the default `port` option value to be 9222 and the default
 `debug-port` option value to be 9223.
 
-## 1.1.1 - 2014-08-12
+## 1.1.1 - 2015-08-12
 ### FIXED
 
 - Fixed an issue where peer connections would not close when an upstream
@@ -26,7 +26,7 @@ connection was closed in the multiplexer.
 - Fixed an issue with the multiplexer where state would persist after the
 upstream connection closed which would prevent reconnections.
 
-## 1.1.0 - 2014-08-11
+## 1.1.0 - 2015-08-11
 ### ADDED
 
 - Added protocol multiplexing, the new `port` and `host` options define
@@ -44,4 +44,4 @@ previously it was written to both standard output and standard error.
 
 - Fixed an issue where errors from interactive mode input would be reported as `[Object]`.
 
-## 1.0.0 - 2014-07-14
+## 1.0.0 - 2015-07-14
