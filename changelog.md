@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.1.3 - 2015-09-10
+### FIXED
+
+- Fixed an issue with compiled filepaths not being normalized, this could result
+in mapped files not being served by the server when running on Windows.
+
+- Fixed an issue where the browser plugin could get stuck waiting for the tab to
+open indefinitely.
+
+- Fixed an issue where no error would be reported and the browser plugin could
+get stuck if the debug port was already in-use.
+
 ## 1.1.2 - 2015-08-13
 ### FIXED
 
