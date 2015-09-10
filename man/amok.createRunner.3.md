@@ -33,10 +33,10 @@ amok.createRunner()
     console.log(runner.get('directory'));
   })
   .connect('localhost', 9222, function() {
-    console.log('connected')
+    console.log('connected');
   });
 ```
 
 ## SEE ALSO
 
-[amok.Runner](amok.Runner.3.md)
+[`amok.Runner`](amok.Runner.3.md)

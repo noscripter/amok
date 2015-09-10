@@ -21,7 +21,7 @@ The `amok.Runner` object.
 
 ## DESCRIPTION
 
-Runs trough the middleware stack, calling the `callback` function when done.
+Runs through the middleware stack, calling the `callback` function when done.
 
 ## SEE ALSO
 

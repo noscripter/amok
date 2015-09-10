@@ -17,7 +17,7 @@ function print(stream)
 
 ## DESCRIPTION
 
-Creates a middleware function that mirrors the client's console stream to
+Creates a middleware function that mirrors the client console output to
 the specified `stream`.
 
 ## RETURN VALUE
@@ -26,7 +26,7 @@ the specified `stream`.
 
 ## EXAMPLES
 
-Redirect inspector console to stdout
+Redirect client console to stdout
 
 ```js
 var amok = require('amok');

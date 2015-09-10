@@ -13,14 +13,17 @@ browser(command, [args], [output])
 
 ## PARAMETERS
 
+`port` *Integer*
+:   The port to listen on
+
 `command` *String*
 :   The command to run
 
 `args` *Array*
 :   List of string arguments
 
-`output` *stream.Readable*
-:   The output stream to use
+`options` *Object*
+:   The options to use
 
 ## DESCRIPTION
 
@@ -28,8 +31,7 @@ Creates a middleware function that spawns a browser process specified with the g
 `command` with command line arguments in `args`. If omitted, `args` defaults to an
 empty *Array*.
 
-Standard output and standard error streams will be piped to the specified `output` stream.
-If omitted `output` defaults to `undefined`.
+The browser will accept debug connections on the port specified by the given `port`.
 
 ## RETURN VALUE
 

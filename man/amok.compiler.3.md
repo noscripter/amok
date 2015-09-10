@@ -3,15 +3,16 @@
 
 ## NAME
 
-amok.compiler -- watch and incrementally compile scripts.
+`amok.compiler` -- watch and incrementally compile scripts.
 
 ## SYNOPSIS
 
 ```js
-compiler(compiler, args, [output])
+compiler(compiler, [args], [options])
 ```
 
 ## PARAMETERS
+
 `command` *String*
 :   The command to run
 
@@ -26,9 +27,6 @@ compiler(compiler, args, [output])
 Creates a middleware function that spawns a compiler process specified with the given
 `command` with command line arguments in `args`. If omitted, `args` defaults to an
 empty *Array*.
-
-Standard output and standard error streams will be piped to the specified `output` stream.
-If omitted `output` defaults to `undefined`.
 
 ## RETURN VALUE
 
@@ -49,3 +47,5 @@ runner.run(function(error, inspector, runner) {
 ```
 
 ## SEE ALSO
+
+[`amok.compiler`](amok.compiler.3.md)

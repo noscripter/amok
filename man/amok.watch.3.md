@@ -55,3 +55,5 @@ window.addEventListener('unlink', function(event) {
 ```
 
 ## SEE ALSO
+
+[`amok.hotpatch`](amok.hotpatch.3.md)

@@ -3,20 +3,19 @@
 
 ## NAME
 
-amok.hotpatch -- monitor file system and hot patch active scripts.
+`amok.hotpatch` -- monitor file system and hot patch active scripts.
 
 ## SYNOPSIS
 
 ```js
-function hotpatch([output]);
+function hotpatch();
 ```
 
 ## PARAMETERS
 
 ## DESCRIPTION
 
-Creates a middleware function that monitors file system and hot patches active scripts,
-diagnostic information is written to the `output` stream.
+Creates a middleware function that monitors active script sources and hot patches their source definitions on file change.
 
 Changes to scripts are only executed at evaluation time, modifications to code that is not running after load will not have an effect.
 Changes to code executed at a later stage, such as callbacks or event handlers can however be changed and tested on the fly.
@@ -27,7 +26,7 @@ Changes to code executed at a later stage, such as callbacks or event handlers c
 
 ## EXAMPLES
 
-Hot patch scripts
+Hot patch scripts with aliases
 
 ```js
 var amok = require('amok');
