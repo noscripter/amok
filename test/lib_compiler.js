@@ -13,7 +13,7 @@ var commands = [
 
 commands.forEach(function (command, index) {
   test('compile with ' + command, function (test) {
-    test.plan(5);
+    test.plan(6);
 
     var runner = amok.createRunner();
 
