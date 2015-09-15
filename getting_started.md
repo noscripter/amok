@@ -171,7 +171,7 @@ Re-rendering mithril applications is essentially identical.
 
 ```
 window.addEventListener('patch', function(event) {
-  Mithril.render();
+  Mithril.redraw();
 });
 ```
 
