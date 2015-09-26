@@ -79,9 +79,8 @@ browsers.forEach(function (browser) {
         } else if (line.match(/step/)) {
           source = source.replace(line, values[0]);
 
-          setTimeout(function () {
-            fs.writeFileSync(entries[0], source, 'utf-8');
-          }, 1000);
+          fs.writeFileSync(entries[0] + '.tmp', source, 'utf-8');
+          fs.renameSync(entries[0] + '.tmp', entries[0]);
         }
       });
     });
