@@ -14,7 +14,7 @@ browsers.forEach(function (browser, index) {
   var port = 4000 + index;
 
   test('hot patch basic script in ' + browser, function (test) {
-    test.plan(35);
+    test.plan(25);
 
     var runner = amok.createRunner();
     runner.on('close', function () {
@@ -55,9 +55,7 @@ browsers.forEach(function (browser, index) {
           source = source.replace(message.text, values[0]);
           test.notEqual(source, fs.readFileSync('test/fixture/hotpatch-basic/index.js'));
 
-          fs.writeFile('test/fixture/hotpatch-basic/index.js', source, 'utf-8', function (error) {
-            test.error(error);
-          });
+          fs.writeFileSync('test/fixture/hotpatch-basic/index.js', source, 'utf-8');
         }
       });
 

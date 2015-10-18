@@ -29,7 +29,7 @@ browsers.forEach(function (browser) {
     ];
 
     test(args.join(' '), function (test) {
-      test.plan(23);
+      test.plan(13);
 
       var ps = child.spawn('node', args);
       ps.stderr.pipe(process.stderr);
@@ -67,9 +67,7 @@ browsers.forEach(function (browser) {
         } else if (line.match(/^step/)) {
           source = source.replace(line, values[0]);
 
-          fs.writeFile('test/fixture/hotpatch-basic/index.js', source, 'utf-8', function (error) {
-            test.error(error);
-          });
+          fs.writeFileSync('test/fixture/hotpatch-basic/index.js', source, 'utf-8');
         }
       });
     });
