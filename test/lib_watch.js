@@ -20,9 +20,9 @@ browsers.forEach(function (browser, index) {
       test.pass('close');
     });
 
-    runner.set('url', url.resolve('file://', path.join('/' + __dirname, '/fixture/watch-events/index.html')));
+    runner.set('url', url.resolve('file://', path.join('/' + __dirname, '/fixture/watch/index.html')));
 
-    runner.set('cwd', 'test/fixture/watch-events');
+    runner.set('cwd', 'test/fixture/watch');
     runner.use(amok.browser(port, browser));
     runner.use(amok.watch('*.txt'));
 
@@ -42,11 +42,11 @@ browsers.forEach(function (browser, index) {
         if (values[0] === undefined) {
           runner.close();
         } if (message.text === 'ready') {
-          fs.writeFileSync('test/fixture/watch-events/file.txt', 'hello', 'utf-8');
+          fs.writeFileSync('test/fixture/watch/file.txt', 'hello', 'utf-8');
         } else if (message.text === 'add file.txt') {
-          fs.writeFileSync('test/fixture/watch-events/file.txt', 'hello world', 'utf-8');
+          fs.writeFileSync('test/fixture/watch/file.txt', 'hello world', 'utf-8');
         } else if (message.text === 'change file.txt') {
-          fs.unlinkSync('test/fixture/watch-events/file.txt');
+          fs.unlinkSync('test/fixture/watch/file.txt');
         }
       });
 

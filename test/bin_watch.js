@@ -20,12 +20,12 @@ browsers.forEach(function (browser) {
     var args = [
       bin,
       '--cwd',
-      'test/fixture/watch-events',
+      'test/fixture/watch',
       '--watch',
       '*.txt',
       '--browser',
       browser,
-      url.resolve('file://', path.join('/' + __dirname, '/fixture/watch-events/index.html'))
+      url.resolve('file://', path.join('/' + __dirname, '/fixture/watch/index.html'))
     ];
 
     var ps = child.spawn('node', args);
@@ -50,11 +50,11 @@ browsers.forEach(function (browser) {
       test.equal(line, messages.shift(), line);
 
       if (line === 'ready') {
-        fs.writeFileSync('test/fixture/watch-events/file.txt', 'hello', 'utf-8');
+        fs.writeFileSync('test/fixture/watch/file.txt', 'hello', 'utf-8');
       } else if (line === 'add file.txt') {
-        fs.writeFileSync('test/fixture/watch-events/file.txt', 'hello world', 'utf-8');
+        fs.writeFileSync('test/fixture/watch/file.txt', 'hello world', 'utf-8');
       } else if (line === 'change file.txt') {
-        fs.unlinkSync('test/fixture/watch-events/file.txt');
+        fs.unlinkSync('test/fixture/watch/file.txt');
       }
 
       if (messages.length === 0) {
@@ -74,7 +74,7 @@ browsers.forEach(function (browser) {
       '**/*.txt',
       '--browser',
       browser,
-      'test/fixture/watch-events/index.js',
+      'test/fixture/watch/index.js',
     ];
 
     var ps = child.spawn('node', args);
@@ -85,9 +85,9 @@ browsers.forEach(function (browser) {
 
     var messages = [
       'ready',
-      'add test/fixture/watch-events/file.txt',
-      'change test/fixture/watch-events/file.txt',
-      'unlink test/fixture/watch-events/file.txt'
+      'add test/fixture/watch/file.txt',
+      'change test/fixture/watch/file.txt',
+      'unlink test/fixture/watch/file.txt'
     ];
 
     ps.stdout.setEncoding('utf-8');
@@ -99,11 +99,11 @@ browsers.forEach(function (browser) {
       test.equal(line, messages.shift(), line);
 
       if (line === 'ready') {
-        fs.writeFileSync('test/fixture/watch-events/file.txt', 'hello', 'utf-8');
-      } else if (line === 'add test/fixture/watch-events/file.txt') {
-        fs.writeFileSync('test/fixture/watch-events/file.txt', 'hello world', 'utf-8');
-      } else if (line === 'change test/fixture/watch-events/file.txt') {
-        fs.unlinkSync('test/fixture/watch-events/file.txt');
+        fs.writeFileSync('test/fixture/watch/file.txt', 'hello', 'utf-8');
+      } else if (line === 'add test/fixture/watch/file.txt') {
+        fs.writeFileSync('test/fixture/watch/file.txt', 'hello world', 'utf-8');
+      } else if (line === 'change test/fixture/watch/file.txt') {
+        fs.unlinkSync('test/fixture/watch/file.txt');
       }
 
       if (messages.length === 0) {
