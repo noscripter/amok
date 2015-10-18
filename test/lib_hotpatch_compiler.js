@@ -71,8 +71,10 @@ browsers.forEach(function (browser, index) {
             source = source.replace(message.text, values[0]);
             test.notEqual(source, fs.readFileSync(entries[0]));
 
-            fs.writeFileSync(entries[0] + '.tmp', source, 'utf-8');
-            fs.renameSync(entries[0] + '.tmp', entries[0]);
+            setTimeout(function() {
+              fs.writeFileSync(entries[0] + '.tmp', source, 'utf-8');
+              fs.renameSync(entries[0] + '.tmp', entries[0]);
+            }, 1000);
           }
         });
 
