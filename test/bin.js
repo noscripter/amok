@@ -36,7 +36,7 @@ var help = [
 help.forEach(function (arg) {
   var args = [bin, arg];
 
-  test('bin print help', function (test) {
+  test(args.join(' '), function (test) {
     test.plan(2);
 
     var ps = child.spawn('node', args);

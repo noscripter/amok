@@ -14,19 +14,19 @@ var browsers = [
 ];
 
 browsers.forEach(function (browser) {
-  test('print watch events with file url in ' + browser, function (test) {
-    test.plan(5);
+  var args = [
+    bin,
+    '--cwd',
+    'test/fixture/watch',
+    '--watch',
+    '*.txt',
+    '--browser',
+    browser,
+    url.resolve('file://', path.join('/' + __dirname, '/fixture/watch/index.html'))
+  ];
 
-    var args = [
-      bin,
-      '--cwd',
-      'test/fixture/watch',
-      '--watch',
-      '*.txt',
-      '--browser',
-      browser,
-      url.resolve('file://', path.join('/' + __dirname, '/fixture/watch/index.html'))
-    ];
+  test(args.join(' '), function (test) {
+    test.plan(5);
 
     var ps = child.spawn('node', args);
     ps.stderr.pipe(process.stderr);
@@ -65,17 +65,17 @@ browsers.forEach(function (browser) {
 });
 
 browsers.forEach(function (browser) {
-  test('print watch events with server in ' + browser, function (test) {
-    test.plan(5);
+  var args = [
+    bin,
+    '--watch',
+    '**/*.txt',
+    '--browser',
+    browser,
+    'test/fixture/watch/index.js',
+  ];
 
-    var args = [
-      bin,
-      '--watch',
-      '**/*.txt',
-      '--browser',
-      browser,
-      'test/fixture/watch/index.js',
-    ];
+  test(args.join(' '), function (test) {
+    test.plan(5);
 
     var ps = child.spawn('node', args);
     ps.stderr.pipe(process.stderr);
