@@ -15,8 +15,8 @@ var browsers = [
 
 browsers.forEach(function (browser) {
   var entries = [
-    'test/fixture/hotpatch-basic/index.js',
-    url.resolve('file://', path.join('/' + __dirname, '/fixture/hotpatch-basic/index.html'))
+    'test/fixture/hotpatch/index.js',
+    url.resolve('file://', path.join('/' + __dirname, '/fixture/hotpatch/index.html'))
   ];
 
   entries.forEach(function (entry) {
@@ -53,7 +53,7 @@ browsers.forEach(function (browser) {
         'step-0',
       ];
 
-      var source = fs.readFileSync('test/fixture/hotpatch-basic/index.js', 'utf-8');
+      var source = fs.readFileSync('test/fixture/hotpatch/index.js', 'utf-8');
       ps.stdout.setEncoding('utf-8');
       ps.stdout.pipe(sculpt.split(/\r?\n/)).on('data', function (line) {
         if (line.length === 0) {
@@ -67,7 +67,7 @@ browsers.forEach(function (browser) {
         } else if (line.match(/^step/)) {
           source = source.replace(line, values[0]);
 
-          fs.writeFileSync('test/fixture/hotpatch-basic/index.js', source, 'utf-8');
+          fs.writeFileSync('test/fixture/hotpatch/index.js', source, 'utf-8');
         }
       });
     });

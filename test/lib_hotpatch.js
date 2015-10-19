@@ -21,10 +21,10 @@ browsers.forEach(function (browser, index) {
       test.pass('close');
     });
 
-    runner.set('url', url.resolve('file://', path.join('/' + __dirname, '/fixture/hotpatch-basic/index.html')));
+    runner.set('url', url.resolve('file://', path.join('/' + __dirname, '/fixture/hotpatch/index.html')));
 
     runner.use(amok.browser(port, browser));
-    runner.use(amok.hotpatch('test/fixture/hotpatch-basic/*.js'));
+    runner.use(amok.hotpatch('test/fixture/hotpatch/*.js'));
 
     runner.connect(port, 'localhost', function () {
       test.pass('connect');
@@ -44,7 +44,7 @@ browsers.forEach(function (browser, index) {
         'step-0',
       ];
 
-      var source = fs.readFileSync('test/fixture/hotpatch-basic/index.js', 'utf-8');
+      var source = fs.readFileSync('test/fixture/hotpatch/index.js', 'utf-8');
 
       runner.client.console.on('data', function (message) {
         test.equal(message.text, values.shift(), message.text);
@@ -53,9 +53,9 @@ browsers.forEach(function (browser, index) {
           runner.close();
         } else if (message.text.match(/step/)) {
           source = source.replace(message.text, values[0]);
-          test.notEqual(source, fs.readFileSync('test/fixture/hotpatch-basic/index.js'));
+          test.notEqual(source, fs.readFileSync('test/fixture/hotpatch/index.js'));
 
-          fs.writeFileSync('test/fixture/hotpatch-basic/index.js', source, 'utf-8');
+          fs.writeFileSync('test/fixture/hotpatch/index.js', source, 'utf-8');
         }
       });
 
