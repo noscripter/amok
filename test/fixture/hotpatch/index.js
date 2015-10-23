@@ -1,12 +1,5 @@
-console.log('ready');
+window.addEventListener('patch', function(event) {
+  console.log('step-0');
+});
 
-var previous = null;
-
-setInterval(function() {
-  var value = 'step-0';
-  if (value !== previous) {
-    console.log(value);
-    document.write('<p>' + value + '</p>');
-    previous = value;
-  }
-}, 0);
+console.log('step-0');

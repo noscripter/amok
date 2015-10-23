@@ -14,7 +14,7 @@ browsers.forEach(function (browser, index) {
   var port = 4000 + index;
 
   test('hot patch basic script in ' + browser, function (test) {
-    test.plan(25);
+    test.plan(24);
 
     var runner = amok.createRunner();
     runner.on('close', function () {
@@ -30,7 +30,6 @@ browsers.forEach(function (browser, index) {
       test.pass('connect');
 
       var values = [
-        'ready',
         'step-0',
         'step-1',
         'step-2',
@@ -56,54 +55,6 @@ browsers.forEach(function (browser, index) {
           test.notEqual(source, fs.readFileSync('test/fixture/hotpatch/index.js'));
 
           fs.writeFileSync('test/fixture/hotpatch/index.js', source, 'utf-8');
-        }
-      });
-
-      runner.client.console.enable(function (error) {
-        test.error(error);
-      });
-    });
-  });
-});
-
-browsers.forEach(function (browser, index) {
-  var port = 4000 + index;
-
-  test('hot patch events in ' + browser, function (test) {
-    test.plan(6);
-
-    var runner = amok.createRunner();
-    runner.on('close', function () {
-      test.pass('close');
-    });
-
-    runner.set('cwd', 'test/fixture/hotpatch-events');
-    runner.set('url', url.resolve('file://', path.join('/' + __dirname, '/fixture/hotpatch-events/index.html')));
-
-    runner.use(amok.browser(port, browser));
-    runner.use(amok.hotpatch('test/fixture/hotpatch-events/*.js'));
-
-    runner.connect(port, 'localhost', function () {
-      test.pass('connect');
-
-      var values = [
-        'ready',
-        'patch index.js',
-      ];
-
-      runner.client.console.on('data', function (message) {
-
-        test.equal(message.text, values.shift());
-
-        if (values[0] === undefined) {
-          runner.close();
-        } else if (message.text.match(/ready/)) {
-          var source = fs.readFileSync('test/fixture/hotpatch-events/index.js', 'utf-8');
-          setTimeout(function () {
-            fs.writeFile('test/fixture/hotpatch-events/index.js', source, 'utf-8', function (error) {
-              test.error(error);
-            });
-          }, 1000);
         }
       });
 

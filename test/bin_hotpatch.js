@@ -29,7 +29,7 @@ browsers.forEach(function (browser) {
     ];
 
     test(args.join(' '), function (test) {
-      test.plan(13);
+      test.plan(12);
 
       var ps = child.spawn('node', args);
       ps.stderr.pipe(process.stderr);
@@ -39,7 +39,6 @@ browsers.forEach(function (browser) {
       });
 
       var values = [
-        'ready',
         'step-0',
         'step-1',
         'step-2',

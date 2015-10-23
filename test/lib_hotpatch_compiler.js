@@ -20,7 +20,7 @@ browsers.forEach(function (browser, index) {
 
   compilers.forEach(function (compiler) {
     test('hot patch basic script compiled with ' + compiler + ' in ' + browser, function (test) {
-      test.plan(25);
+      test.plan(24);
 
       var dirname = 'test/fixture/hotpatch-' + compiler;
       var entries = fs.readdirSync(dirname).map(function (filename) {
@@ -46,7 +46,6 @@ browsers.forEach(function (browser, index) {
         test.pass('connect');
 
         var values = [
-          'ready',
           'step-0',
           'step-1',
           'step-2',

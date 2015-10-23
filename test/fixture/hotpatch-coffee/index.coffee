@@ -1,12 +1,5 @@
-console.log 'ready'
-
-previous = null
-
-setInterval (->
-  value = 'step-0'
-  if value != previous
-    console.log value
-    document.write '<p>' + value + '</p>'
-    previous = value
+window.addEventListener 'patch', (event) ->
+  console.log 'step-0'
   return
-), 0
+
+console.log 'step-0'
