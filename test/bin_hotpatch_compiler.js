@@ -8,10 +8,7 @@ var sculpt = require('sculpt');
 
 var bin = require('../package.json').bin['amok'];
 
-var browsers = [
-  'chrome',
-  'chromium',
-];
+var browsers = (process.env['TEST_BROWSERS'] || 'chrome,chromium').split(',');
 
 var compilers = [
   'babel',

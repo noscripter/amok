@@ -5,10 +5,8 @@ var test = require('tape');
 var url = require('url');
 var path = require('path');
 
-var browsers = [
-  'chrome',
-  'chromium',
-];
+var browsers = (process.env['TEST_BROWSERS'] || 'chrome,chromium').split(',');
+
 
 browsers.forEach(function (browser, index) {
   var port = 4000 + index;

@@ -4,15 +4,12 @@ var test = require('tape');
 var url = require('url');
 var path = require('path');
 
-var commands = [
-  'chrome',
-  'chromium',
-];
+var browsers = (process.env['TEST_BROWSERS'] || 'chrome,chromium').split(',');
 
-commands.forEach(function (command, index) {
+browsers.forEach(function (browser, index) {
   var port = 4000 + index;
 
-  test('open url in ' + command, function (test) {
+  test('open url in ' + browser, function (test) {
     test.plan(3);
 
     var runner = amok.createRunner();
@@ -22,7 +19,7 @@ commands.forEach(function (command, index) {
 
     runner.set('url', url.resolve('file://', path.join('/' + __dirname, '/fixture/basic/index.html')));
 
-    runner.use(amok.browser(port, command));
+    runner.use(amok.browser(port, browser));
     runner.connect(port, 'localhost', function () {
       runner.client.console.on('data', function (message) {
         test.equal(message.text, 'ready');
@@ -39,10 +36,10 @@ commands.forEach(function (command, index) {
   });
 });
 
-commands.forEach(function (command, index) {
+browsers.forEach(function (browser, index) {
   var port = 4000 + index;
 
-  test('error when port is used in ' + command, function (test) {
+  test('error when port is used in ' + browser, function (test) {
     test.plan(2);
     test.timeoutAfter(5000);
 
@@ -58,7 +55,7 @@ commands.forEach(function (command, index) {
       });
 
       runner.set('url', url.resolve('file://', path.join('/' + __dirname, '/fixture/basic/index.html')));
-      runner.use(amok.browser(port, command));
+      runner.use(amok.browser(port, browser));
 
       runner.on('error', function(error) {
         test.equal(error.code, 'EADDRINUSE');
