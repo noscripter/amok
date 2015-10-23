@@ -74,6 +74,6 @@ The project is free and open source, and has been backed by a number of
   </tr>
 </table>
 
-The last funding round was in early 2015, and the project is currently looking for more sponsorship, individual or organizational backers, every penny helps [patreon](http://patreon.com/caspervonb).
+A special thanks also goes out to Daniel Martinez, Dan Abramov and Tom Alon for going above and beyond in supporting development.
 
 [![Patreon](https://cloud.githubusercontent.com/assets/157787/8892582/79e9f8d8-3392-11e5-8714-663b153a686b.png)](http://patreon.com/caspervonb)

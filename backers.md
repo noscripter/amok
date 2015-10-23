@@ -14,6 +14,7 @@ The project has been backed and funded by the following awesome individuals
 * Andrey Okonetchnikov
 * Barney Carroll
 * Dan Abramov
+* Daniel Martinez
 * David Ernst
 * Denny Trebbin
 * Emmanuel Vilsbol
@@ -31,6 +32,8 @@ The project has been backed and funded by the following awesome individuals
 * Richard Munroe
 * Sebastian Golasch
 * Sebastian Siemssen
+* Siemen Brakken
+* Sverre Johansen
 * Serban Stancu
 * Sergey Lukin
 * Tom MacWright
