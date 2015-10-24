@@ -100,7 +100,6 @@ dispatched after a hot code patch has been applied successfully.
 ```js
 addEventListener('patch', function(event) {
   console.log('%s patched', event.detail.filename);
-  console.log('event.detail.source);
 });
 ```
 
