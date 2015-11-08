@@ -24,8 +24,8 @@ The `amok.Runner` object.
 
 ## DESCRIPTION
 
-Runs through all current middleware stack with `amok.Runner.prototype.run` before
-connecting to the client specified by `port` and `host`.
+Runs through all current middleware stack with `amok.Runner.prototype.run`
+before connecting to the client specified by `port` and `host`.
 
 The `callback` will be added on the `connect` event of the runner object.
 

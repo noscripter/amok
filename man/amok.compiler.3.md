@@ -21,9 +21,9 @@ compiler(compiler, [args], [options])
 
 ## DESCRIPTION
 
-Creates a middleware function that spawns a compiler process specified with the given
-`command` with command line arguments in `args`. If omitted, `args` defaults to an
-empty *Array*.
+ Creates a middleware function that spawns a compiler process specified with
+the given `command` with command line arguments in `args`. If omitted, `args`
+defaults to an empty *Array*.
 
 ## RETURN VALUE
 

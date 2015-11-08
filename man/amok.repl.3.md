@@ -14,8 +14,8 @@ function repl(input, output)
 
 ## DESCRIPTION
 
-Creates a middleware function that starts a read-eval-print-loop taking
-input from the given `input` stream and writing to the given `output` stream.
+Creates a middleware function that starts a read-eval-print-loop taking input
+from the given `input` stream and writing to the given `output` stream.
 
 ## RETURN VALUE
 

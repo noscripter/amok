@@ -9,23 +9,28 @@
 
 ## DESCRIPTION
 
-**Amok** facilitates incremental development and live code editing for browsers with hot code patching,
-quick server and browser launching, preprocessing support, console mirroring and a read-eval-print-loop.
+**Amok** facilitates incremental development and live code editing for browsers
+with hot code patching, quick server and browser launching, preprocessing
+support, console mirroring and a read-eval-print-loop.
 
-With a _URL_, **amok** will connect to a browser page with the given _url_,
-the `--browser` option may be used in order to open the _url_ in a browser before connecting to it.
+With a _URL_, **amok** will connect to a browser page with the given _url_, the
+`--browser` option may be used in order to open the _url_ in a browser before
+connecting to it.
 
-With one or more _FILES_ **amok** will start a http server before connecting to a browser page with the given _url_,
-the `--cwd`, `--port` and `--host` host options dictate the root directory, port and address of the server.
-If no index.html file is present, the server will be generate one on demand, with the input files
-referenced as script elements in the body of the document.
+With one or more _FILES_ **amok** will start a http server before connecting to
+a browser page with the given _url_, the `--cwd`, `--port` and `--host` host
+options dictate the root directory, port and address of the server. If no
+index.html file is present, the server will be generate one on demand, with the
+input files referenced as script elements in the body of the document.
 
-The `--browser` option may be used in order to open the server's url in a browser before attempting to establish a connection to it.
+The `--browser` option may be used in order to open the server's url in a
+browser before attempting to establish a connection to it.
 
 The `--compiler` option may be used in order to enable incremental preprocessing
 with a compiler, which will shadow the path of the input _file_.
 
-While a connection is established, console output from the browser will be mirrored in standard output.
+While a connection is established, console output from the browser will be
+mirrored in standard output.
 
 The `--debug-port` and `--debug-host` options define the address where the
 outbound remote debugging connection will be established.

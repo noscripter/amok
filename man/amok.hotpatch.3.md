@@ -12,10 +12,13 @@ function hotpatch();
 
 ## DESCRIPTION
 
-Creates a middleware function that monitors active script sources and hot patches their source definitions on file change.
+Creates a middleware function that monitors active script sources and hot
+patches their source definitions on file change.
 
-Changes to scripts are only executed at evaluation time, modifications to code that is not running after load will not have an effect.
-Changes to code executed at a later stage, such as callbacks or event handlers can however be changed and tested on the fly.
+Changes to scripts are only executed at evaluation time, modifications to code
+that is not running after load will not have an effect. Changes to code executed
+at a later stage, such as callbacks or event handlers can however be changed and
+tested on the fly.
 
 ## RETURN VALUE
 
@@ -38,7 +41,7 @@ runner.connect(9922, 'localhost', function(error) {
   if (error) {
     return console.error(error);
   }
-  
+
   console.log('Hot patching runner scripts');
 });
 ```

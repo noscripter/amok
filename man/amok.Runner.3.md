@@ -43,7 +43,8 @@ new Runner()
 
 ## DESCRIPTION
 
-An `amok.Runner` objects are middleware runners that encapsulate `rdbg.Client` objects.
+An `amok.Runner` objects are middleware runners that encapsulate `rdbg.Client`
+objects.
 
 ## EXAMPLES
 

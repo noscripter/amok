@@ -29,8 +29,9 @@
 
 ## DESCRIPTION
 
-`amok.Runner` instances inherit from `amok.Runner.prototype`.
-You can use the constructor's prototype object to add properties or methods to all Map instances.
+`amok.Runner` instances inherit from `amok.Runner.prototype`. You can use the
+constructor's prototype object to add properties or methods to all `amok.Runner`
+instances.
 
 ## SEE ALSO
 

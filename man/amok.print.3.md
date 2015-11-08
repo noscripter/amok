@@ -14,8 +14,8 @@ function print(stream)
 
 ## DESCRIPTION
 
-Creates a middleware function that mirrors the client console output to
-the specified `stream`.
+Creates a middleware function that mirrors the client console output to the
+specified `stream`.
 
 ## RETURN VALUE
 

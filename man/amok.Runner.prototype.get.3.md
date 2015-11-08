@@ -14,11 +14,12 @@ get(key)
 
 ## RETURN VALUE
 
-Returns the setting associated with the specified key or undefined if the key can't be found.
+Returns the setting associated with the specified key or undefined if the key
+can't be found.
 
 ## DESCRIPTION
 
-Returns the value 
+Returns the value
 
 ## SEE ALSO
 

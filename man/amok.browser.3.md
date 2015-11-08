@@ -24,11 +24,12 @@ browser(port, command, [args], [options])
 
 ## DESCRIPTION
 
-Creates a middleware function that spawns a browser process specified with the given
-`command` with command line arguments in `args`. If omitted, `args` defaults to an
-empty *Array*.
+Creates a middleware function that spawns a browser process specified with the
+given `command` with command line arguments in `args`. If omitted, `args`
+defaults to an empty *Array*.
 
-The browser will accept debug connections on the port specified by the given `port`.
+The browser will accept debug connections on the port specified by the given
+`port`.
 
 ## RETURN VALUE
 

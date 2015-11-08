@@ -10,8 +10,8 @@ createRunner()
 
 ## DESCRIPTION
 
-Creates a new `amok.Runner` object, this is equivalent of calling
-the constructor [`amok.Runner`](amok.Runner.3.md) constructor.
+Creates a new `amok.Runner` object, this is equivalent of calling the
+constructor [`amok.Runner`](amok.Runner.3.md) constructor.
 
 ## RETURN VALUE
 
