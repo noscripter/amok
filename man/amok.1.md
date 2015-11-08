@@ -110,21 +110,17 @@ window.addEventListener('scriptChange', function(event) {
 
 ## ENVIRONMENT
 
-* `CHROME_BIN`
-:   Path to a chrome executable used when opening chrome.
+* `BROWSER`
+:   Path to the default browser executable to use when no browser name or
+executable path is given to the _BROWSER_ option.
 
-* `CHROME_FLAGS`
-:   List of command line options used when opening chrome.
-
-* `CHROMIUM_BIN`
-:   Path to a chromium executable used when opening chromium.
-
-* `CHROMIUM_FLAGS`
-:   List of command line options used when opening chromium.
+* `BROWSER_FLAGS`
+:   List of command line options used when spawning a browser.
 
 ## EXAMPLES
 
 Connect to an existing browser page with a matching url
+
 ```sh
 $ amok http://localhost:4000
 ```
