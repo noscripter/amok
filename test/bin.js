@@ -17,9 +17,9 @@ version.forEach(function (arg) {
     test.plan(2);
 
     var ps = child.spawn('node', args);
+    ps.stdout.setEncoding('utf-8');
     ps.stdout.on('data', function (data) {
-      var message = data.toString();
-      test.equal(message, require('../package.json').version + '\n');
+      test.equal(data, require('../package.json').version + '\n');
     });
 
     ps.on('close', function (code) {
@@ -40,9 +40,9 @@ help.forEach(function (arg) {
     test.plan(2);
 
     var ps = child.spawn('node', args);
+    ps.stdout.setEncoding('utf-8');
     ps.stdout.on('data', function (data) {
-      var message = data.toString();
-      test.ok(message.indexOf('Usage:') > -1);
+      test.ok(data.indexOf('Usage:') > -1);
     });
 
     ps.on('close', function (code) {
