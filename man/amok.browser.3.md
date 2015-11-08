@@ -5,7 +5,7 @@ amok.browser -- spawn a local browser process
 ## SYNOPSIS
 
 ```js
-browser(port, command, [args], [output])
+browser(port, command, [args], [options])
 ```
 
 ## PARAMETERS
