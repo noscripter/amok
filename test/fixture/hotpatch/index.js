@@ -1,4 +1,4 @@
-window.addEventListener('patch', function(event) {
+window.addEventListener('scriptChange', function(event) {
   console.log('step-0');
 });
 

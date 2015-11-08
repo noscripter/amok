@@ -98,8 +98,8 @@ The `--hot` option also enables an event on the window object which is
 dispatched after a hot code patch has been applied successfully.
 
 ```js
-addEventListener('patch', function(event) {
-  console.log('%s patched', event.detail.filename);
+window.addEventListener('scriptChange', function(event) {
+  console.log('script \'%s\' changed', event.detail.filename);
 });
 ```
 
