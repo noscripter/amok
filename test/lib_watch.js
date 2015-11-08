@@ -28,9 +28,9 @@ browsers.forEach(function (browser, index) {
 
       var values = [
         'ready',
-        'add file.txt',
-        'change file.txt',
-        'unlink file.txt'
+        'fileCreate file.txt',
+        'fileChange file.txt',
+        'fileRemove file.txt'
       ];
 
       runner.client.console.on('data', function (message) {
@@ -40,9 +40,9 @@ browsers.forEach(function (browser, index) {
           runner.close();
         } if (message.text === 'ready') {
           fs.writeFileSync('test/fixture/watch/file.txt', 'hello', 'utf-8');
-        } else if (message.text === 'add file.txt') {
+        } else if (message.text === 'fileCreate file.txt') {
           fs.writeFileSync('test/fixture/watch/file.txt', 'hello world', 'utf-8');
-        } else if (message.text === 'change file.txt') {
+        } else if (message.text === 'fileChange file.txt') {
           fs.unlinkSync('test/fixture/watch/file.txt');
         }
       });

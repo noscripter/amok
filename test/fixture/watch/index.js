@@ -1,16 +1,16 @@
 console.log('ready');
 
-window.addEventListener('add', function(event) {
+window.addEventListener('fileCreate', function(event) {
   console.assert(event.detail.filename);
-  console.log('add ' + event.detail.filename);
+  console.log('fileCreate ' + event.detail.filename);
 });
 
-window.addEventListener('change', function(event) {
+window.addEventListener('fileChange', function(event) {
   console.assert(event.detail.filename);
-  console.log('change ' + event.detail.filename);
+  console.log('fileChange ' + event.detail.filename);
 });
 
-window.addEventListener('unlink', function(event) {
+window.addEventListener('fileRemove', function(event) {
   console.assert(event.detail.filename);
-  console.log('unlink ' + event.detail.filename);
+  console.log('fileRemove ' + event.detail.filename);
 });

@@ -86,15 +86,15 @@ The `--watch` option enables several events on the window object which are
 dispatched when a file is added, changed or removed.
 
 ```js
-addEventListener('add', function(event) {
+addEventListener('fileCreate', function(event) {
   console.log('%s added', event.detail.filename);
 });
 
-addEventListener('change', function(event) {
+addEventListener('fileChange', function(event) {
   console.log('%s changed', event.detail.filename);
 });
 
-addEventListener('unlink', function(event) {
+addEventListener('fileRemove', function(event) {
   console.log('%s removed', event.detail.filename);
 });
 ```

@@ -33,9 +33,9 @@ browsers.forEach(function (browser) {
 
     var messages = [
       'ready',
-      'add file.txt',
-      'change file.txt',
-      'unlink file.txt'
+      'fileCreate file.txt',
+      'fileChange file.txt',
+      'fileRemove file.txt'
     ];
 
     ps.stdout.setEncoding('utf-8');
@@ -48,9 +48,9 @@ browsers.forEach(function (browser) {
 
       if (line === 'ready') {
         fs.writeFileSync('test/fixture/watch/file.txt', 'hello', 'utf-8');
-      } else if (line === 'add file.txt') {
+      } else if (line === 'fileCreate file.txt') {
         fs.writeFileSync('test/fixture/watch/file.txt', 'hello world', 'utf-8');
-      } else if (line === 'change file.txt') {
+      } else if (line === 'fileChange file.txt') {
         fs.unlinkSync('test/fixture/watch/file.txt');
       }
 
@@ -82,9 +82,9 @@ browsers.forEach(function (browser) {
 
     var messages = [
       'ready',
-      'add test/fixture/watch/file.txt',
-      'change test/fixture/watch/file.txt',
-      'unlink test/fixture/watch/file.txt'
+      'fileCreate test/fixture/watch/file.txt',
+      'fileChange test/fixture/watch/file.txt',
+      'fileRemove test/fixture/watch/file.txt'
     ];
 
     ps.stdout.setEncoding('utf-8');
@@ -97,9 +97,9 @@ browsers.forEach(function (browser) {
 
       if (line === 'ready') {
         fs.writeFileSync('test/fixture/watch/file.txt', 'hello', 'utf-8');
-      } else if (line === 'add test/fixture/watch/file.txt') {
+      } else if (line === 'fileCreate test/fixture/watch/file.txt') {
         fs.writeFileSync('test/fixture/watch/file.txt', 'hello world', 'utf-8');
-      } else if (line === 'change test/fixture/watch/file.txt') {
+      } else if (line === 'fileChange test/fixture/watch/file.txt') {
         fs.unlinkSync('test/fixture/watch/file.txt');
       }
 

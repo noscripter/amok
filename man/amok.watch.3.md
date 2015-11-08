@@ -38,15 +38,15 @@ runner.connect(4000, 'localhost', function(error, inspector, runner) {
 Listen for watch events in the browser runtime
 
 ```js
-window.addEventListener('add', function(event) {
+window.addEventListener('fileCreate', function(event) {
   console.log('% added', event.detail.filename);
 });
 
-window.addEventListener('change', function(event) {
+window.addEventListener('fileChange', function(event) {
   console.log('% changed', event.detail.filename);
 });
 
-window.addEventListener('unlink', function(event) {
+window.addEventListener('fileRemove', function(event) {
   console.log('%s removed', event.detail.filename);
 });
 ```
