@@ -46,6 +46,14 @@ runner.connect(9922, 'localhost', function(error) {
 });
 ```
 
+Subscribe to script changes in a browser target
+
+```js
+window.addEventListener('scriptChange', function(event) {
+  console.log('script %s changed', event.detail.filename);
+});
+```
+
 ## SEE ALSO
 
 [amok.watch](amok.watch.3.md)
