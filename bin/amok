@@ -97,6 +97,7 @@ amok.on('connect', function () {
 });
 
 amok.use(amok.multiplexer(program.port, program.host, program.debugPort, program.debugHost));
+amok.use(amok.inspector(program.port, program.host));
 
 amok.connect(program.port, program.host);
 
