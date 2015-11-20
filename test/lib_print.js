@@ -1,8 +1,8 @@
 var amok = require('..');
-var test = require('tape');
-var stream = require('stream');
-var url = require('url');
 var path = require('path');
+var stream = require('stream');
+var test = require('tape');
+var url = require('url');
 
 var browsers = (process.env['TEST_BROWSERS'] || 'chrome,chromium').split(',');
 

@@ -1,7 +1,7 @@
 var child = require('child_process');
 var http = require('http');
-var test = require('tape');
 var path = require('path');
+var test = require('tape');
 var url = require('url');
 
 var bin = require('../package.json').bin['amok'];

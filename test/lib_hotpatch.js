@@ -1,9 +1,9 @@
 var amok = require('..');
 var fs = require('fs');
 var http = require('http');
+var path = require('path');
 var test = require('tape');
 var url = require('url');
-var path = require('path');
 
 var browsers = (process.env['TEST_BROWSERS'] || 'chrome,chromium').split(',');
 

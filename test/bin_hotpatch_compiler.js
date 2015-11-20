@@ -1,10 +1,10 @@
 var child = require('child_process');
-var http = require('http');
-var test = require('tape');
 var fs = require('fs');
+var http = require('http');
 var path = require('path');
-var url = require('url');
 var sculpt = require('sculpt');
+var test = require('tape');
+var url = require('url');
 
 var bin = require('../package.json').bin['amok'];
 
