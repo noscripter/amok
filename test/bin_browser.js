@@ -12,48 +12,56 @@ browsers.forEach(function (browser) {
   var port = 4000;
   var hostname = 'localhost';
 
-  var args = [
-    bin,
-    '--browser',
-    browser,
-    '--debug-port',
-    port,
-    '--debug-host',
-    hostname,
-    url.resolve('file://', path.join('/' + __dirname, '/fixture/basic/index.html')),
+  var entries = [
+    'test/fixture/basic/index.html',
+    path.resolve('test/fixture/basic/index.html'),
+    url.resolve('file://', path.resolve('test/fixture/basic/index.html'))
   ];
 
-  test(args.join(' '), function (test) {
-    test.plan(2);
+  entries.forEach(function(entry) {
+    var args = [
+      bin,
+      '--browser',
+      browser,
+      '--debug-port',
+      port,
+      '--debug-host',
+      hostname,
+      entry
+    ];
 
-    var ps = child.spawn('node', args);
-    ps.stderr.pipe(process.stderr);
+    test(args.join(' '), function (test) {
+      test.plan(2);
 
-    ps.on('close', function () {
-      test.pass('close');
-    });
+      var ps = child.spawn('node', args);
+      ps.stderr.pipe(process.stderr);
 
-    ps.stdout.setEncoding('utf-8');
-    ps.stdout.once('data', function (data) {
-      test.equal(data, 'ready\n');
-
-      var request = http.get({
-        port: port,
-        hostname: hostname,
-        path: '/json/version',
+      ps.on('close', function () {
+        test.pass('close');
       });
 
-      request.on('response', function(response) {
-        var data = '';
+      ps.stdout.setEncoding('utf-8');
+      ps.stdout.once('data', function (data) {
+        test.equal(data, 'ready\n');
 
-        response.setEncoding('utf-8');
-        response.on('data', function(chunk) {
-          data += chunk;
+        var request = http.get({
+          port: port,
+          hostname: hostname,
+          path: '/json/version',
         });
 
-        response.on('end', function() {
-          JSON.parse(data);
-          ps.kill();
+        request.on('response', function(response) {
+          var data = '';
+
+          response.setEncoding('utf-8');
+          response.on('data', function(chunk) {
+            data += chunk;
+          });
+
+          response.on('end', function() {
+            JSON.parse(data);
+            ps.kill();
+          });
         });
       });
     });

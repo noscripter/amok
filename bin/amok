@@ -44,7 +44,7 @@ program.parse(process.argv);
 amok.set('cwd', program.cwd);
 
 program.url = program.args.filter(function (arg) {
-  return arg.match(/^(http|https|file|about:blank)/);
+  return arg.match(/^(http|https|file|about:blank)/) || arg.match(/(.html)$/);
 })[0];
 
 program.scripts = program.args.filter(function (arg) {
