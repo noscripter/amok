@@ -9,28 +9,36 @@ var browsers = (process.env['TEST_BROWSERS'] || 'chrome,chromium').split(',');
 browsers.forEach(function (browser, index) {
   var port = 4000 + index;
 
-  test('open url in ' + browser, function (test) {
-    test.plan(3);
+  var entries = [
+    'test/fixture/basic/index.html',
+    path.resolve('test/fixture/basic/index.html'),
+    url.resolve('file://', path.resolve('test/fixture/basic/index.html'))
+  ];
 
-    var runner = amok.createRunner();
-    runner.on('close', function () {
-      test.pass('close');
-    });
+  entries.forEach(function(entry) {
+    test('open url (' + entry + ') in ' + browser, function (test) {
+      test.plan(3);
 
-    runner.set('url', url.resolve('file://', path.join('/' + __dirname, '/fixture/basic/index.html')));
-
-    runner.use(amok.browser(port, browser));
-    runner.connect(port, 'localhost', function () {
-      runner.client.console.on('data', function (message) {
-        test.equal(message.text, 'ready');
-
-        setTimeout(function () {
-          runner.close();
-        }, 100);
+      var runner = amok.createRunner();
+      runner.on('close', function () {
+        test.pass('close');
       });
 
-      runner.client.console.enable(function (error) {
-        test.error(error);
+      runner.set('url', entry);
+
+      runner.use(amok.browser(port, browser));
+      runner.connect(port, 'localhost', function () {
+        runner.client.console.on('data', function (message) {
+          test.equal(message.text, 'ready');
+
+          setTimeout(function () {
+            runner.close();
+          }, 100);
+        });
+
+        runner.client.console.enable(function (error) {
+          test.error(error);
+        });
       });
     });
   });
