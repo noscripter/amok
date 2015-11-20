@@ -65,7 +65,6 @@ browsers.forEach(function (browser, index) {
             runner.close();
           } else if (message.text.match(/step/)) {
             source = source.replace(message.text, values[0]);
-            test.notEqual(source, fs.readFileSync(entries[0]));
 
             setTimeout(function() {
               fs.writeFileSync(entries[0] + '.tmp', source, 'utf-8');
