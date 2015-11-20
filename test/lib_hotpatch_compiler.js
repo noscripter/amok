@@ -17,7 +17,7 @@ browsers.forEach(function (browser, index) {
 
   compilers.forEach(function (compiler) {
     test('hot patch basic script compiled with ' + compiler + ' in ' + browser, function (test) {
-      test.plan(24);
+      test.plan(14);
 
       var dirname = 'test/fixture/hotpatch-' + compiler;
       var entries = fs.readdirSync(dirname).map(function (filename) {
