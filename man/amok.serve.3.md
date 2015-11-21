@@ -1,11 +1,11 @@
 ## NAME
 
-amok.server -- serve static files.
+amok.serve -- serve static files.
 
 ## SYNOPSIS
 
 ```js
-function server(port, host)
+function serve(port, host)
 ```
 
 ## PARAMETERS
@@ -37,7 +37,7 @@ Use server
 ```js
 var amok = require('amok');
 
-runner.use(amok.server(4000, 'localhost'));
+runner.use(amok.serve(4000, 'localhost'));
 runner.run(function(error, inspector, runner) {
   console.log('Server listening on http://localhost:4000');
 });

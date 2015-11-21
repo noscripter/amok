@@ -20,7 +20,7 @@ browsers.forEach(function (browser, index) {
     runner.set('url', url.resolve('file://', path.join('/' + __dirname, '/fixture/watch/index.html')));
 
     runner.set('cwd', 'test/fixture/watch');
-    runner.use(amok.browser(port, browser));
+    runner.use(amok.browse(port, browser));
     runner.use(amok.watch('*.txt'));
 
     runner.connect(port, 'localhost', function () {

@@ -1,11 +1,11 @@
 ## NAME
 
-amok.print -- create a remote read-eval-print-loop
+amok.interact -- create a remote read-eval-print-loop
 
 ## SYNOPSIS
 
 ```js
-function repl(input, output)
+function interact(input, output)
 ```
 
 ## PARAMETERS
@@ -28,7 +28,7 @@ Start a read-eval-print-loop
 var amok = require('amok');
 
 var runner = amok.createRunner();
-runner.use(amok.repl(process.stdin, process.stdout));
+runner.use(amok.interact(process.stdin, process.stdout));
 runner.connect(9922, 'localhost', function(error) {
   if (error) {
     return console.error(error);

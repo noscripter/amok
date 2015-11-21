@@ -24,7 +24,7 @@ commands.forEach(function (command, index) {
       return filename.search('out') === -1;
     });
 
-    runner.use(amok.compiler(command, entries));
+    runner.use(amok.compile(command, entries));
     runner.run(function (error, client, runner) {
       test.error(error);
       test.ok(client, 'client');

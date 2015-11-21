@@ -26,7 +26,7 @@ browsers.forEach(function (browser, index) {
 
       runner.set('url', entry);
 
-      runner.use(amok.browser(port, browser));
+      runner.use(amok.browse(port, browser));
       runner.connect(port, 'localhost', function () {
         runner.client.console.on('data', function (message) {
           test.equal(message.text, 'ready');
@@ -63,7 +63,7 @@ browsers.forEach(function (browser, index) {
       });
 
       runner.set('url', url.resolve('file://', path.join('/' + __dirname, '/fixture/basic/index.html')));
-      runner.use(amok.browser(port, browser));
+      runner.use(amok.browse(port, browser));
 
       runner.on('error', function(error) {
         test.equal(error.code, 'EADDRINUSE');

@@ -59,13 +59,13 @@ if (program.url) {
     return object;
   }, {}));
 
-  amok.use(amok.server(program.httpPort, program.httpHost));
+  amok.use(amok.serve(program.httpPort, program.httpHost));
 } else {
   program.help();
 }
 
 if (program.compiler) {
-  amok.use(amok.compiler(program.compiler, program.args, {
+  amok.use(amok.compile(program.compiler, program.args, {
     stdio: ['ignore', process.stderr, process.stderr]
   }));
 }
@@ -79,13 +79,13 @@ if (program.hot) {
 }
 
 if (program.browser) {
-  amok.use(amok.browser(program.debugPort, program.browser.command, program.browser.args, {
+  amok.use(amok.browse(program.debugPort, program.browser.command, program.browser.args, {
     stdio: ['ignore', process.stderr, process.stderr]
   }));
 }
 
 if (program.interactive) {
-  amok.use(amok.repl(process.stdin, process.stdout));
+  amok.use(amok.interact(process.stdin, process.stdout));
 } else {
   amok.use(amok.print(process.stdout));
 }
@@ -96,8 +96,8 @@ amok.on('connect', function () {
   });
 });
 
-amok.use(amok.multiplexer(program.port, program.host, program.debugPort, program.debugHost));
-amok.use(amok.inspector(program.port, program.host));
+amok.use(amok.multiplex(program.port, program.host, program.debugPort, program.debugHost));
+amok.use(amok.inspect(program.port, program.host));
 
 amok.connect(program.port, program.host);
 

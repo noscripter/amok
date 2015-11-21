@@ -16,7 +16,7 @@ test('serve index.html', function (test) {
   var pathnames = ['/', '/index.html'];
 
   runner.set('cwd', 'test/fixture/basic');
-  runner.use(amok.server(9966, 'localhost'));
+  runner.use(amok.serve(9966, 'localhost'));
 
   runner.run(function (error, client, runner) {
     test.error(error);
@@ -74,7 +74,7 @@ test('generate index.html', function (test) {
     'c.js': 'test/fixture/basic/index.js',
   });
 
-  runner.use(amok.server(9966, 'localhost'));
+  runner.use(amok.serve(9966, 'localhost'));
 
   runner.run(function (error, client, runner) {
     test.error(error);
@@ -132,7 +132,7 @@ test('generate favicon.ico', function (test) {
     'c.js': 'test/fixture/basic/index.js',
   });
 
-  runner.use(amok.server(9966, 'localhost'));
+  runner.use(amok.serve(9966, 'localhost'));
 
   runner.run(function (error, client, runner) {
     test.error(error);
@@ -181,7 +181,7 @@ test('generate index.html', function (test) {
     'c.js': 'test/fixture/basic/index.js',
   });
 
-  runner.use(amok.server(9966, 'localhost'));
+  runner.use(amok.serve(9966, 'localhost'));
 
   runner.run(function (error, client, runner) {
     test.error(error);
@@ -244,7 +244,7 @@ test('serve scripts', function (test) {
 
   runner.set('scripts', scripts);
 
-  runner.use(amok.server(9966, 'localhost'));
+  runner.use(amok.serve(9966, 'localhost'));
 
   runner.run(function (error, client, runner) {
     test.error(error);

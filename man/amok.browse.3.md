@@ -1,6 +1,6 @@
 ## NAME
 
-amok.browser -- spawn a local browser process
+amok.browse -- spawn a local browser process
 
 ## SYNOPSIS
 

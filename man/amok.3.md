@@ -16,10 +16,10 @@ require('amok')
 [`amok.createRunner`](amok.createRunner.3.md)
 :   Creates an `amok.Runner` object.
 
-[`amok.browser`](amok.browser.3.md)
+[`amok.browse`](amok.browse.3.md)
 :   Middleware for opening a browser.
 
-[`amok.compiler`](amok.compiler.3.md)
+[`amok.compile`](amok.compile.3.md)
 :   Middleware for watching and incrementally preprocessing scripts with a compiler.
 
 [`amok.hotpatch`](hotpatch.3.md)
@@ -31,7 +31,7 @@ require('amok')
 [`amok.repl`](amok.repl.3.md)
 :   Middleware for creating a read-eval-print-loop.
 
-[`amok.server`](amok.server.3.md)
+[`amok.serve`](amok.serve.3.md)
 :   Middleware for starting a http development server.
 
 [`amok.watch`](amok.watch.3.md)

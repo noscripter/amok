@@ -31,12 +31,12 @@ browsers.forEach(function (browser, index) {
         test.pass('close');
       });
 
-      runner.use(amok.server(9966, 'localhost'));
-      runner.use(amok.compiler(compiler, entries, {
+      runner.use(amok.serve(9966, 'localhost'));
+      runner.use(amok.compile(compiler, entries, {
         stdio: 'inherit'
       }));
 
-      runner.use(amok.browser(port, browser));
+      runner.use(amok.browse(port, browser));
       runner.use(amok.hotpatch());
 
       runner.connect(port, 'localhost', function () {

@@ -25,7 +25,7 @@ browsers.forEach(function (browser, index) {
       runner.close();
     };
 
-    runner.use(amok.browser(port, browser));
+    runner.use(amok.browse(port, browser));
     runner.use(amok.print(output));
 
     runner.connect(port, 'localhost', function () {

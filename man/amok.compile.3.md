@@ -1,11 +1,11 @@
 ## NAME
 
-`amok.compiler` -- watch and incrementally compile scripts.
+`amok.compile` -- watch and incrementally compile scripts.
 
 ## SYNOPSIS
 
 ```js
-compiler(compiler, [args], [options])
+compile(compiler, [args], [options])
 ```
 
 ## PARAMETERS

@@ -21,7 +21,7 @@ browsers.forEach(function (browser, index) {
 
     runner.set('url', url.resolve('file://', path.join('/' + __dirname, '/fixture/hotpatch/index.html')));
 
-    runner.use(amok.browser(port, browser));
+    runner.use(amok.browse(port, browser));
     runner.use(amok.hotpatch('test/fixture/hotpatch/*.js'));
 
     runner.connect(port, 'localhost', function () {
