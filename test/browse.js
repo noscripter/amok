@@ -1,78 +1,136 @@
-var amok = require('..');
-var net = require('net');
-var test = require('tape');
-var url = require('url');
-var path = require('path');
+'use strict';
 
-var browsers = (process.env['TEST_BROWSERS'] || 'chrome,chromium').split(',');
+const amok = require('..');
+const http = require('http');
+const net = require('net');
+const path = require('path');
+const test = require('tape');
+const url = require('url');
 
-browsers.forEach(function (browser, index) {
-  var port = 4000 + index;
+test('error when port is in use', assert => {
+  assert.plan(2);
 
-  var entries = [
-    'test/fixture/basic/index.html',
-    path.resolve('test/fixture/basic/index.html'),
-    url.resolve('file://', path.resolve('test/fixture/basic/index.html'))
-  ];
+  var server = net.createServer();
+  server.on('listening', function() {
+    var runner = amok.createRunner();
 
-  entries.forEach(function(entry) {
-    test('open url (' + entry + ') in ' + browser, function (test) {
-      test.plan(3);
+    runner.use(amok.browse(4000, 'chrome'));
 
-      var runner = amok.createRunner();
-      runner.on('close', function () {
-        test.pass('close');
-      });
+    runner.once('error', error => {
+      assert.equal(error.code, 'EADDRINUSE');
 
-      runner.set('url', entry);
-
-      runner.use(amok.browse(port, browser));
-      runner.connect(port, 'localhost', function () {
-        runner.client.console.on('data', function (message) {
-          test.equal(message.text, 'ready');
-
-          setTimeout(function () {
-            runner.close();
-          }, 100);
+      runner.once('close', () => {
+        server.once('close', () => {
+          assert.pass('close');
         });
 
-        runner.client.console.enable(function (error) {
-          test.error(error);
-        });
-      });
-    });
-  });
-});
-
-browsers.forEach(function (browser, index) {
-  var port = 4000 + index;
-
-  test('error when port is used in ' + browser, function (test) {
-    test.plan(2);
-    test.timeoutAfter(5000);
-
-    var server = net.createServer();
-    server.on('close', function() {
-      test.pass();
-    });
-
-    server.on('listening', function() {
-      var runner = amok.createRunner();
-      server.on('close', function () {
-        runner.close();
-      });
-
-      runner.set('url', url.resolve('file://', path.join('/' + __dirname, '/fixture/basic/index.html')));
-      runner.use(amok.browse(port, browser));
-
-      runner.on('error', function(error) {
-        test.equal(error.code, 'EADDRINUSE');
         server.close();
       });
 
-      runner.connect(port, 'localhost');
+      runner.close();
     });
 
-    server.listen(port);
+    runner.connect(4000, 'localhost');
+  });
+
+  server.listen(4000);
+});
+
+const browsers = [
+  'chrome',
+  'chromium'
+];
+
+browsers.reduce((entries, browser) => {
+  entries.push({
+    browser,
+    url: 'test/fixture/browse/index.html',
+  });
+
+  entries.push({
+    browser,
+    url: path.resolve('test/fixture/browse/index.html'),
+  });
+
+  entries.push({
+    browser,
+    url: 'browse/index.html',
+    options: {
+      cwd: 'test/fixture/',
+    }
+  });
+
+  entries.push({
+    browser,
+    url: 'index.html',
+    options: {
+      cwd: 'test/fixture/browse',
+    }
+  });
+
+  return entries;
+}, []).forEach(entry => {
+  test(`browse file url ${entry.url} in ${entry.browser}`, assert => {
+    assert.plan(2);
+    let runner = amok.createRunner();
+
+    runner.use(amok.browse(4000, entry.browser, [entry.url], entry.options));
+    runner.once('connect', () => {
+      assert.equal(runner.get('url'), `file://${path.resolve('test/fixture/browse/index.html')}`);
+
+      runner.on('close', () => {
+        assert.pass('close');
+      });
+
+      runner.close();
+    });
+
+    runner.connect(4000, 'localhost');
+  });
+});
+
+browsers.reduce((entries, browser) => {
+  entries.push({
+    browser,
+    url: 'http://localhost:8080',
+  });
+
+  entries.push({
+    browser,
+    url: 'http://localhost:8080/',
+  });
+  return entries;
+}, []).forEach(entry => {
+  test(`browse file url ${entry.url} in ${entry.browser}`, assert => {
+    assert.plan(2);
+
+    let server = http.createServer();
+    server.once('listening', () => {
+      server.on('request', (request, response) => {
+        response.end();
+      });
+
+      let runner = amok.createRunner();
+
+      runner.set('url', entry.url);
+      runner.use(amok.browse(4000, entry.browser, [], entry.options));
+      runner.once('connect', () => {
+        assert.equal(runner.get('url'), `http://localhost:8080/`);
+
+        runner.on('close', () => {
+          server.once('close', () => {
+            assert.pass('close');
+          });
+
+          server.close();
+        });
+
+        runner.close();
+      });
+
+      runner.connect(4000, 'localhost');
+    });
+
+    server.listen(8000);
   });
 });
