@@ -20,4 +20,5 @@ before_install:
 test:
   - node --version
   - npm --version
-  - npm test
+  # - npm test
+  - node test/browse.js
