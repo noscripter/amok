@@ -1,33 +1,80 @@
-var amok = require('..');
-var fs = require('fs');
-var http = require('http');
-var path = require('path');
-var test = require('tape');
-var url = require('url');
+'use strict';
 
-var browsers = (process.env['TEST_BROWSERS'] || 'chrome,chromium').split(',');
+const amok = require('..');
+const fs = require('fs');
+const http = require('http');
+const path = require('path');
+const test = require('tape');
+const url = require('url');
 
+const browsers = [
+  'chrome',
+  'chromium'
+];
 
-browsers.forEach(function (browser, index) {
-  var port = 4000 + index;
+browsers.reduce((entries, browser) => {
+  entries.push({
+    browser,
+    url: 'test/fixture/hotpatch-browser/index.html',
+    filename: 'test/fixture/hotpatch-browser/index.js'
+  });
 
-  test('hot patch basic script in ' + browser, function (test) {
-    test.plan(24);
+  entries.push({
+    browser,
+    url: path.resolve('test/fixture/hotpatch-browser/index.html'),
+    filename: 'test/fixture/hotpatch-browser/index.js'
+  });
 
-    var runner = amok.createRunner();
-    runner.on('close', function () {
-      test.pass('close');
-    });
+  entries.push({
+    browser,
+    url: 'hotpatch-browser/index.html',
+    options: {
+      cwd: 'test/fixture/',
+    },
+    filename: 'test/fixture/hotpatch-browser/index.js',
+  });
 
-    runner.set('url', url.resolve('file://', path.join('/' + __dirname, '/fixture/hotpatch/index.html')));
+  entries.push({
+    browser,
+    url: 'index.html',
+    options: {
+      cwd: 'test/fixture/hotpatch-browser',
+    },
+    filename: 'test/fixture/hotpatch-browser/index.js',
+  });
 
-    runner.use(amok.browse(port, browser));
-    runner.use(amok.hotpatch('test/fixture/hotpatch/*.js'));
+  return entries;
+}, []).concat([
+  {
+    url: 'test/fixture/hotpatch-node/index.js',
+    filename: 'test/fixture/hotpatch-node/index.js',
+  },
+  {
+    url: 'index.js',
+    filename: 'test/fixture/hotpatch-node/index.js',
+    options: {
+      cwd: 'test/fixture/hotpatch-node',
+    }
+  }
+]).forEach((entry, index) => {
+  test(`hotpatch ${entry.url} with ${entry.browser || 'node'}`, assert => {
+    assert.plan(14);
 
-    runner.connect(port, 'localhost', function () {
-      test.pass('connect');
+    let runner = amok.createRunner();
 
-      var values = [
+    if (entry.browser) {
+      runner.use(amok.browse(4000, entry.browser, [entry.url], entry.options));
+    } else {
+      runner.use(amok.spawn(4000, [entry.url], entry.options));
+    }
+
+    runner.use(amok.hotpatch());
+
+    runner.once('connect', () => {
+      assert.comment('connect');
+
+      let messages = [
+        'ready',
         'step-0',
         'step-1',
         'step-2',
@@ -41,24 +88,31 @@ browsers.forEach(function (browser, index) {
         'step-0',
       ];
 
-      var source = fs.readFileSync('test/fixture/hotpatch/index.js', 'utf-8');
+      let source = fs.readFileSync(entry.filename, 'utf-8');
 
       runner.client.console.on('data', function (message) {
-        test.equal(message.text, values.shift(), message.text);
+        assert.equal(message.text, messages.shift(), message.text);
 
-        if (values[0] === undefined) {
-          runner.close();
-        } else if (message.text.match(/step/)) {
-          source = source.replace(message.text, values[0]);
-          test.notEqual(source, fs.readFileSync('test/fixture/hotpatch/index.js'));
+        if (messages.length == 0) {
+          runner.once('close', () => {
+            assert.pass('close');
+          });
 
-          fs.writeFileSync('test/fixture/hotpatch/index.js', source, 'utf-8');
+          return runner.close();
         }
+
+        if (message.text.match(/step/)) {
+          source = source.replace(message.text, messages[0]);
+        }
+
+        fs.writeFileSync(entry.filename, source, 'utf-8');
       });
 
-      runner.client.console.enable(function (error) {
-        test.error(error);
+      runner.client.console.enable(error => {
+        assert.error(error);
       });
     });
+
+    runner.connect(4000);
   });
 });
