@@ -4,7 +4,7 @@ MD       := $(wildcard *.md **/*.md)
 PAGEDIR  := gh-pages
 PAGE     := $(patsubst %.md, $(PAGEDIR)/%.md, $(patsubst %readme.md, %index.md, $(MD)))
 
-TEST     := $(wildcard test/*.js)
+TEST     := test/browse.js test/hotpatch.js
 
 test: $(TEST)
 	tape $^
