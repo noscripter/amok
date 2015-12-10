@@ -1,14 +1,12 @@
-var amok = require('..');
-var test = require('tape');
+'use strict';
 
-test('run plugins', function (test) {
+const amok = require('..');
+const test = require('tape');
+
+test('run plugins', assert => {
   test.plan(4);
 
-  var runner = amok.createRunner();
-  runner.on('close', function () {
-    test.pass();
-  });
-
+  let runner = amok.createRunner();
   runner.use(function one(client, runner, done) {
     test.pass();
     done();
@@ -21,6 +19,11 @@ test('run plugins', function (test) {
 
   runner.run(function ready(error, client, runner) {
     test.error(error);
+
+    runner.once('close', () => {
+      test.pass('close');
+    });
+
     runner.close();
   });
 });
