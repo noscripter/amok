@@ -4,26 +4,26 @@ const amok = require('..');
 const test = require('tape');
 
 test('run plugins', assert => {
-  test.plan(4);
+  assert.plan(3);
 
   let runner = amok.createRunner();
   runner.use(function one(client, runner, done) {
-    test.pass();
+    assert.pass();
     done();
   });
 
   runner.use(function two(client, runner, done) {
-    test.pass();
+    assert.pass();
     done();
   });
 
-  runner.run(function ready(error, client, runner) {
-    test.error(error);
-
+  runner.once('run', () => {
     runner.once('close', () => {
-      test.pass('close');
+      assert.pass('close');
     });
 
     runner.close();
   });
+
+  runner.run();
 });

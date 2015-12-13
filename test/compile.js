@@ -8,7 +8,7 @@ var test = require('tape');
 const compiler = process.env['TEST_COMPILER'] || '';
 
 test(`compile with ${compiler}`, assert =>  {
-  test.plan(6);
+  assert.plan(3);
 
   let runner = amok.createRunner();
 
@@ -19,19 +19,17 @@ test(`compile with ${compiler}`, assert =>  {
     return filename.search('out') === -1;
   });
 
-  runner.use(amok.compile(command, entries));
-  runner.run((error, client, runner) => {
-    test.error(error);
-    test.ok(client, 'client');
-    test.ok(runner, 'runner');
-
+  runner.use(amok.compile(compiler, entries));
+  runner.once('run', () => {
     let scripts = runner.get('scripts');
     let pathnames = Object.keys(scripts);
     let filename = scripts[pathnames[0]];
 
-    test.equal(pathnames.length, 1);
-    test.equal(pathnames[0], path.normalize(pathnames[0]));
-    test.equal(fs.readFileSync(filename, 'utf-8'), fs.readFileSync(path.join(dirname, 'out.js'), 'utf-8'));
+    assert.equal(pathnames.length, 1);
+    assert.equal(pathnames[0], path.normalize(pathnames[0]));
+    assert.equal(fs.readFileSync(filename, 'utf-8'), fs.readFileSync(path.join(dirname, 'out.js'), 'utf-8'));
     runner.close();
   });
+
+  runner.run();
 });

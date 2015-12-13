@@ -7,10 +7,10 @@ const path = require('path');
 const test = require('tape');
 const url = require('url');
 
-const port = process.env['TEST_PORT'] || 9966;
+const port = process.env['TEST_PORT'] || 9933;
 
 test('serve index.html', assert => {
-  assert.plan(9);
+  assert.plan(6);
 
   let runner = amok.createRunner();
   let pathnames = ['/', '/index.html'];
@@ -18,11 +18,7 @@ test('serve index.html', assert => {
   runner.set('cwd', 'test/fixture/basic');
   runner.use(amok.serve(port, 'localhost'));
 
-  runner.run((error, client, runner) => {
-    assert.error(error);
-    assert.ok(client, 'client');
-    assert.ok(runner, 'runner');
-
+  runner.once('run', () => {
     assert.equal(runner.get('url'), url.format({
       protocol: 'http',
       port: port,
@@ -36,34 +32,36 @@ test('serve index.html', assert => {
         hostname: 'localhost',
         path: pathname
       }, response => {
-          assert.equal(response.statusCode, 200);
+        assert.equal(response.statusCode, 200);
 
-          response.setEncoding('utf-8');
+        response.setEncoding('utf-8');
 
-          let body = '';
-          response.on('data', (chunk) => {
-            body += chunk;
-          });
-
-          response.on('end', () => {
-            assert.equal(body, fs.readFileSync('test/fixture/basic/index.html', 'utf-8'));
-
-            pathnames.splice(pathnames.indexOf(pathname), 1);
-            if (pathnames.length == 0) {
-              runner.on('close', () => {
-                assert.pass('close');
-              });
-
-              runner.close();
-            }
-          });
+        let body = '';
+        response.on('data', (chunk) => {
+          body += chunk;
         });
+
+        response.on('end', () => {
+          assert.equal(body, fs.readFileSync('test/fixture/basic/index.html', 'utf-8'));
+
+          pathnames.splice(pathnames.indexOf(pathname), 1);
+          if (pathnames.length == 0) {
+            runner.on('close', () => {
+              assert.pass('close');
+            });
+
+            runner.close();
+          }
+        });
+      });
     });
   });
+
+  runner.run();
 });
 
 test('generate index.html', assert => {
-  assert.plan(13);
+  assert.plan(10);
 
   let runner = amok.createRunner();
   runner.on('close', () => {
@@ -80,11 +78,7 @@ test('generate index.html', assert => {
 
   runner.use(amok.serve(port, 'localhost'));
 
-  runner.run((error, client, runner) => {
-    assert.error(error);
-    assert.ok(client, 'client');
-    assert.ok(runner, 'runner');
-
+  runner.once('run', () => {
     assert.equal(runner.get('url'), url.format({
       protocol: 'http',
       port: port,
@@ -98,32 +92,34 @@ test('generate index.html', assert => {
         hostname: 'localhost',
         path: pathname
       }, (response) => {
-          assert.equal(response.statusCode, 200);
+        assert.equal(response.statusCode, 200);
 
-          response.setEncoding('utf-8');
+        response.setEncoding('utf-8');
 
-          let body = '';
-          response.on('data', (chunk) => {
-            body += chunk;
-          });
-
-          response.on('end', () => {
-            assert.ok(body.indexOf('<script src="a"></script>'));
-            assert.ok(body.indexOf('<script src="b"></script>'));
-            assert.ok(body.indexOf('<script src="c"></script>'));
-
-            pathnames.splice(pathnames.indexOf(pathname), 1);
-            if (pathnames.length < 1) {
-              runner.close();
-            }
-          });
+        let body = '';
+        response.on('data', (chunk) => {
+          body += chunk;
         });
+
+        response.on('end', () => {
+          assert.ok(body.indexOf('<script src="a"></script>'));
+          assert.ok(body.indexOf('<script src="b"></script>'));
+          assert.ok(body.indexOf('<script src="c"></script>'));
+
+          pathnames.splice(pathnames.indexOf(pathname), 1);
+          if (pathnames.length < 1) {
+            runner.close();
+          }
+        });
+      });
     });
   });
+
+  runner.run();
 });
 
 test('generate favicon.ico', assert => {
-  assert.plan(6);
+  assert.plan(3);
 
   let runner = amok.createRunner();
   runner.on('close', () => {
@@ -138,11 +134,7 @@ test('generate favicon.ico', assert => {
 
   runner.use(amok.serve(port, 'localhost'));
 
-  runner.run((error, client, runner) => {
-    assert.error(error);
-    assert.ok(client, 'client');
-    assert.ok(runner, 'runner');
-
+  runner.once('run', () => {
     assert.equal(runner.get('url'), url.format({
       protocol: 'http',
       port: port,
@@ -155,22 +147,24 @@ test('generate favicon.ico', assert => {
       hostname: 'localhost',
       path: '/favicon.ico'
     }, (response) => {
-        assert.equal(response.statusCode, 200);
+      assert.equal(response.statusCode, 200);
 
-        let body = '';
-        response.on('data', (chunk) => {
-          body += chunk;
-        });
-
-        response.on('end', () => {
-          runner.close();
-        });
+      let body = '';
+      response.on('data', (chunk) => {
+        body += chunk;
       });
+
+      response.on('end', () => {
+        runner.close();
+      });
+    });
   });
+
+  runner.run();
 });
 
 test('generate index.html', assert => {
-  assert.plan(13);
+  assert.plan(10);
 
   let runner = amok.createRunner();
   runner.on('close', () => {
@@ -187,11 +181,7 @@ test('generate index.html', assert => {
 
   runner.use(amok.serve(port, 'localhost'));
 
-  runner.run((error, client, runner) => {
-    assert.error(error);
-    assert.ok(client, 'client');
-    assert.ok(runner, 'runner');
-
+  runner.once('run', () => {
     assert.equal(runner.get('url'), url.format({
       protocol: 'http',
       port: port,
@@ -205,32 +195,34 @@ test('generate index.html', assert => {
         hostname: 'localhost',
         path: pathname
       }, (response) => {
-          assert.equal(response.statusCode, 200);
+        assert.equal(response.statusCode, 200);
 
-          response.setEncoding('utf-8');
+        response.setEncoding('utf-8');
 
-          let body = '';
-          response.on('data', (chunk) => {
-            body += chunk;
-          });
-
-          response.on('end', () => {
-            assert.ok(body.indexOf('<script src="a"></script>'));
-            assert.ok(body.indexOf('<script src="b"></script>'));
-            assert.ok(body.indexOf('<script src="c"></script>'));
-
-            pathnames.splice(pathnames.indexOf(pathname), 1);
-            if (pathnames.length < 1) {
-              runner.close();
-            }
-          });
+        let body = '';
+        response.on('data', (chunk) => {
+          body += chunk;
         });
+
+        response.on('end', () => {
+          assert.ok(body.indexOf('<script src="a"></script>'));
+          assert.ok(body.indexOf('<script src="b"></script>'));
+          assert.ok(body.indexOf('<script src="c"></script>'));
+
+          pathnames.splice(pathnames.indexOf(pathname), 1);
+          if (pathnames.length < 1) {
+            runner.close();
+          }
+        });
+      });
     });
   });
+
+  runner.run();
 });
 
 test('serve scripts', assert => {
-  assert.plan(13);
+  assert.plan(10);
 
   let runner = amok.createRunner();
   runner.on('close', () => {
@@ -250,11 +242,7 @@ test('serve scripts', assert => {
 
   runner.use(amok.serve(port, 'localhost'));
 
-  runner.run((error, client, runner) => {
-    assert.error(error);
-    assert.ok(client, 'client');
-    assert.ok(runner, 'runner');
-
+  runner.once('run', () => {
     assert.equal(runner.get('url'), url.format({
       protocol: 'http',
       port: port,
@@ -269,25 +257,27 @@ test('serve scripts', assert => {
         hostname: 'localhost',
         path: url.resolve('/', pathname)
       }, (response) => {
-          assert.equal(response.statusCode, 200);
+        assert.equal(response.statusCode, 200);
 
-          response.setEncoding('utf-8');
+        response.setEncoding('utf-8');
 
-          let body = '';
-          response.on('data', (chunk) => {
-            body += chunk;
-          });
-
-          response.on('end', () => {
-            let filename = scripts[pathname];
-            assert.equal(body, fs.readFileSync(path.join('test/fixture/basic', filename), 'utf-8'));
-
-            pathnames.splice(pathnames.indexOf(pathname), 1);
-            if (pathnames.length < 1) {
-              runner.close();
-            }
-          });
+        let body = '';
+        response.on('data', (chunk) => {
+          body += chunk;
         });
+
+        response.on('end', () => {
+          let filename = scripts[pathname];
+          assert.equal(body, fs.readFileSync(path.join('test/fixture/basic', filename), 'utf-8'));
+
+          pathnames.splice(pathnames.indexOf(pathname), 1);
+          if (pathnames.length < 1) {
+            runner.close();
+          }
+        });
+      });
     });
   });
+
+  runner.run();
 });
