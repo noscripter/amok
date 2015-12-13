@@ -13,20 +13,10 @@ program.option('--port <PORT>', 'specify port', 9222);
 program.option('--debug-host <HOST>', 'specify debug host', 'localhost');
 program.option('--debug-port <PORT>', 'specify debug port', 9223);
 
-program.option('-b, --browser [BROWSER]', 'specify browser', function (value) {
-  var args = process.env['BROWSER_FLAGS'];
-  if (args) {
-    args = args.split(' ');
-  }
-
-  var command = value;
-  if (!command) {
-    command = process.env['BROWSER'];
-  }
-
+program.option('-b, --browser [BROWSER]', 'specify browser', value => {
   return {
-    command: command,
-    args: args
+    command: value || process.env['BROWSER'] || 'chrome',
+    args: (process.env['BROWSER_FLAGS'] || '').split(' '),
   };
 });
 
