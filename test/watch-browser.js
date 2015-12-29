@@ -41,11 +41,17 @@ test(`watch events in ${browser}`, assert => {
       }
 
       if (message.text === 'ready') {
-        fs.writeFileSync('test/fixture/watch-browser/file.txt', 'hello', 'utf-8');
+        setTimeout(() => {
+          fs.writeFileSync('test/fixture/watch-browser/file.txt', 'hello', 'utf-8');
+        }, 1000);
       } else if (message.text === 'fileCreate file.txt') {
-        fs.writeFileSync('test/fixture/watch-browser/file.txt', 'hello world', 'utf-8');
+        setTimeout(() => {
+          fs.writeFileSync('test/fixture/watch-browser/file.txt', 'hello world', 'utf-8');
+        }, 1000);
       } else if (message.text === 'fileChange file.txt') {
-        fs.unlinkSync('test/fixture/watch-browser/file.txt');
+        setTimeout(() => {
+          fs.unlinkSync('test/fixture/watch-browser/file.txt');
+        }, 1000);
       }
     });
 
