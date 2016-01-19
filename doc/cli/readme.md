@@ -17,7 +17,7 @@ With a _URL_, **amok** will connect to a browser page with the given _url_, the
 `--browser` option may be used in order to open the _url_ in a browser before
 connecting to it.
 
-With one or more _FILES_ **amok** will start a http server before connecting to
+With one or more _FILES_ **amok** will start a http server before connecting toP
 a browser page with the given _url_, the `--cwd`, `--port` and `--host` host
 options dictate the root directory, port and address of the server. If no
 index.html file is present, the server will be generate one on demand, with the
