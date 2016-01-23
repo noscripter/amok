@@ -1,4 +1,4 @@
-![Amok.js](https://cdn.rawgit.com/amokjs/media/master/banner.svg)
+![Amok.js](https://rawgit.com/amokjs/media/master/logo.svg)
 
 Amok is a free open source, editor agnostic, cross-platform command line
 tool for a hassle-free live development, testing and debugging workflow for web browsers.
