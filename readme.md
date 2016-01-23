@@ -73,7 +73,3 @@ The project is free and open source, and has been backed by a number of
     <th><img src="https://cloud.githubusercontent.com/assets/157787/8017975/7e9595ac-0c39-11e5-9d71-a6fd34e821f0.png"/></th>
   </tr>
 </table>
-
-A special thanks also goes out to Daniel Martinez, Dan Abramov and Tom Alon for going above and beyond in supporting development.
-
-[![Patreon](https://cloud.githubusercontent.com/assets/157787/8892582/79e9f8d8-3392-11e5-8714-663b153a686b.png)](http://patreon.com/caspervonb)
