@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "browser_process": "^1.0.0",
-    "chokidar": "^1.0.3",
+    "chokidar": "^2.0.0",
     "commander": "^2.8.1",
     "compiler_process": "^1.0.0",
     "mime": "^1.3.4",
